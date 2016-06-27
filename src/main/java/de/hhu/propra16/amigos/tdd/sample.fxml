@@ -3,6 +3,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import de.hhu.propra16.amigos.tdd.controls.TDDCodeArea ?>
+<?import java.net.URL?>
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <stylesheets>
+        <URL value="@java-keywords.css" />
+    </stylesheets>
+    <TDDCodeArea maxWidth="Infinity" maxHeight="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
 </GridPane>

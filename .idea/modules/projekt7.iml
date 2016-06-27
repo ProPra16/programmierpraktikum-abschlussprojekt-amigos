@@ -13,7 +13,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: de.hhu.stups:virtual-kata-lib:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.fxmisc.wellbehaved:wellbehavedfx:0.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.fxmisc.flowless:flowless:0.4.5" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.fxmisc.undo:undofx:1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.reactfx:reactfx:2.0-M4u1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.fxmisc.richtext:richtextfx:0.6.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: junit:junit:4.12" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>
 </module>
