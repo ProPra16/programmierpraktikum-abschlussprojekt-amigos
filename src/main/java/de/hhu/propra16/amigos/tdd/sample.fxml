@@ -5,10 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import de.hhu.propra16.amigos.tdd.controls.TDDCodeArea ?>
 <?import java.net.URL?>
+<?import javafx.embed.swing.SwingNode?>
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <stylesheets>
         <URL value="@java-keywords.css" />
     </stylesheets>
-    <TDDCodeArea maxWidth="Infinity" maxHeight="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+    <!-- 2nd Editor for test: <TDDCodeArea GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />-->
+    <SwingNode fx:id="swingNode" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
 </GridPane>
