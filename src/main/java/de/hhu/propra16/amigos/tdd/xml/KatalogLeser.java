@@ -42,9 +42,9 @@ public class KatalogLeser {
                 tests.put(aktuell.getElementsByTagName("test").item(j).getAttributes().getNamedItem("name").getTextContent().trim(), aktuell.getElementsByTagName("test").item(j).getTextContent().trim());
             }
 
-            HashMap<String, Boolean> options = new HashMap<>();
+            HashMap<String, String> options = new HashMap<>();
             for(int j = 0; j < aktuell.getElementsByTagName("option").getLength(); j++) {
-                options.put(aktuell.getElementsByTagName("option").item(j).getAttributes().getNamedItem("name").getTextContent().trim(), Boolean.parseBoolean(aktuell.getElementsByTagName("option").item(j).getAttributes().getNamedItem("value").getTextContent().trim()));
+                options.put(aktuell.getElementsByTagName("option").item(j).getAttributes().getNamedItem("name").getTextContent().trim(), aktuell.getElementsByTagName("option").item(j).getAttributes().getNamedItem("value").getTextContent().trim());
             }
 
             k.addExercise(name, description, classes, tests, options);

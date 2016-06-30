@@ -58,7 +58,7 @@ public class SaveProgress {
             for(String key : k.getOptions(i).keySet()) {
                 Element newOption = dokument.createElement("option");
                 newOption.setAttribute("name", key);
-                newOption.setAttribute("value", Boolean.toString(k.getOptions(i).get(key)));
+                newOption.setAttribute("value", k.getOptions(i).get(key));
                 options.appendChild(newOption);
             }
 

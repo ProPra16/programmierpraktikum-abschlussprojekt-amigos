@@ -8,10 +8,10 @@ public class Exercise {
     private String description;
     private HashMap<String, String> classes;
     private HashMap<String, String> tests;
-    private HashMap<String, Boolean> options;
+    private HashMap<String, String> options;
 
 
-    public Exercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests, HashMap<String, Boolean> options) {
+    public Exercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests, HashMap<String, String> options) {
         this.name = name;
         this.description = description;
         this.classes = classes;
@@ -35,7 +35,7 @@ public class Exercise {
         return tests;
     }
 
-    public HashMap<String, Boolean> getOptions() {
+    public HashMap<String, String> getOptions() {
         return options;
     }
 
