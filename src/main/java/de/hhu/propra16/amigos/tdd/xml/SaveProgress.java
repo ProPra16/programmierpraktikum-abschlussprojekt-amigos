@@ -52,6 +52,16 @@ public class SaveProgress {
                 tests.appendChild(newTest);
             }
 
+            Element options = dokument.createElement("options");
+            exercise.appendChild(options);
+
+            for(String key : k.getOptions(i).keySet()) {
+                Element newOption = dokument.createElement("option");
+                newOption.setAttribute("name", key);
+                newOption.setAttribute("value", Boolean.toString(k.getOptions(i).get(key)));
+                options.appendChild(newOption);
+            }
+
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer transformer = factory.newTransformer();
             DOMSource quelle = new DOMSource(dokument);

@@ -8,13 +8,15 @@ public class Exercise {
     private String description;
     private HashMap<String, String> classes;
     private HashMap<String, String> tests;
+    private HashMap<String, Boolean> options;
 
 
-    public Exercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests) {
+    public Exercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests, HashMap<String, Boolean> options) {
         this.name = name;
         this.description = description;
         this.classes = classes;
         this.tests = tests;
+        this.options = options;
     }
 
     public String getName() {
@@ -31,6 +33,10 @@ public class Exercise {
 
     public HashMap<String, String> getTests() {
         return tests;
+    }
+
+    public HashMap<String, Boolean> getOptions() {
+        return options;
     }
 
 }

@@ -10,8 +10,8 @@ public class Katalog {
         exercises = new ArrayList<>();
     }
 
-    public void addExercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests/*, ArrayList<Konfiguration> konfiguration*/) {
-        exercises.add(new Exercise(name, description, classes, tests/*, konfiguration*/));
+    public void addExercise(String name, String description, HashMap<String, String> classes, HashMap<String, String> tests, HashMap<String, Boolean> options) {
+        exercises.add(new Exercise(name, description, classes, tests, options));
     }
 
     public int size() {
@@ -32,6 +32,10 @@ public class Katalog {
 
     public HashMap<String, String> getTests(int a) {
         return exercises.get(a).getTests();
+    }
+
+    public HashMap<String, Boolean> getOptions(int a) {
+        return exercises.get(a).getOptions();
     }
 
 }
