@@ -1,0 +1,43 @@
+.root{
+	-fx-background-color:#383838;
+	-fx-font-family:"Courier New", monospace;
+}
+.label{
+    -fx-text-fill:#e8e8e8;
+}
+#brand{
+	-fx-font-size:20pt;
+}
+#autor{
+	-fx-font-size:10pt;
+}
+#task{
+	-fx-font-size:12pt;
+}
+
+.button{
+	-fx-text-fill:#e8e8e8;
+	-fx-background-color:#ab4642;
+	-fx-background-radius:4;
+	-fx-font-weight:bold;
+	-fx-padding: 10 30 10 30;
+}
+#start{
+	-fx-font-size:16pt;
+}
+#ok{
+	-fx-font-size:12pt;
+}
+#load{
+    -fx-font-size:10pt;
+    -fx-padding: 5 15 5 15;
+}
+.button:hover {
+    -fx-background-color: #9ACD32;
+}
+#combobox{
+    -fx-border: 0,5px solid black;
+    -fx-padding:.75em 1em .5em 1em;
+    -fx-background-color:#7cafc2;
+    -fx-color:#e8e8e8;
+ }
