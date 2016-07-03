@@ -5,7 +5,6 @@ import vk.core.api.CompilationUnit;
 import vk.core.api.TestFailure;
 import vk.core.internal.InternalCompiler;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
