@@ -34,7 +34,7 @@ public class Controller
         {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("editor.fxml"));
-            stage.setScene(new Scene(root, 400, 500));
+            stage.setScene(new Scene(root, 1050, 800));
             stage.show();
         } catch(Exception e)
         {
@@ -48,5 +48,13 @@ public class Controller
         fileChooser.setTitle("Open XML File");
         fileChooser.getExtensionFilters().addAll(new ExtensionFilter("XML Files", "*.xml"));
         fileChooser.showOpenDialog(stage);
+    }
+    public void runCode()
+    {
+        System.out.println("Run Code");
+    }
+    public void runTest()
+    {
+        System.out.println("Run Test");
     }
 }

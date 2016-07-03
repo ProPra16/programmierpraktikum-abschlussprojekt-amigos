@@ -41,3 +41,24 @@
     -fx-background-color:#7cafc2;
     -fx-color:#e8e8e8;
  }
+#timer{
+    -fx-font-size:18pt;
+    -fx-background-color:#e8e8e8;
+    -fx-text-fill:#383838;
+}
+.text-area .content{
+    -fx-background-color: #383838;
+ }
+ .text-area   {
+     -fx-text-fill:#e8e8e8;
+     -fx-font-size: 16px;
+ }
+#run{
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: #383838;
+    -fx-background-radius:4;
+
+}
+
+
+
