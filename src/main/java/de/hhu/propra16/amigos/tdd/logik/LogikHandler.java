@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class LogikHandler {
+public class LogikHandler implements LogikInterface{
     private Katalog katalog;
 
     private Collection<TestFailure> latestFailures;
@@ -46,5 +46,50 @@ public class LogikHandler {
 
     public Collection<TestFailure> getLatestFailures() {
         return latestFailures;
+    }
+
+    public boolean isBabysteps(int exercise) {
+        return katalog.getOptions(exercise).containsKey("babysteps");
+    }
+
+    public boolean isATDD(int exercise) {
+        return katalog.getOptions(exercise).containsKey("atdd");
+    }
+
+    public int giveTime(int exercise) {
+        if(isBabysteps(exercise)) return Integer.parseInt(katalog.getOptions(exercise).get("babysteps"));
+        else return -1;
+    }
+
+    public String[] failedTests() {
+        TestFailure[] failures = (TestFailure[]) latestFailures.toArray();
+
+        String[] rueckgabe = new String[failures.length];
+
+        for(int i = 0; i < rueckgabe.length; i++) {
+            rueckgabe[i] = failures[i].getTestClassName();
+        }
+
+        return rueckgabe;
+    }
+
+    public String[] failedMethods(String testName) {
+        TestFailure[] failures = (TestFailure[]) latestFailures.toArray();
+        ArrayList<TestFailure> failuresList = new ArrayList<>();
+
+        for(int i = 0; i < failures.length; i++) {
+            if(failures[i].getMethodName().equals(testName)) {
+                failuresList.add(failures[i]);
+            }
+        }
+
+        failures = (TestFailure[]) failuresList.toArray();
+        String[] rueckgabe = new String[failures.length];
+
+        for(int i = 0; i < rueckgabe.length; i++) {
+            rueckgabe[i] = failures[i].getMethodName();
+        }
+
+        return rueckgabe;
     }
 }
