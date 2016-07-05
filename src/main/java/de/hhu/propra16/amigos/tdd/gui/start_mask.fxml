@@ -1,0 +1,27 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import java.net.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.StartMaskController" xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
+    <stylesheets>
+        <URL value="@layout.css" />
+    </stylesheets>
+    <Label id="brand" text="${'Test\nDriven\nDevelopment\nTrainer'}"
+           GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <GridPane.margin>
+            <Insets top="30" />
+        </GridPane.margin>
+    </Label>
+    <Button id="start" text="Start" onAction="#manageStart"
+            GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
+    <Label id="autor" text="by Amigos"
+           GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+        <GridPane.margin>
+            <Insets bottom="15" />
+        </GridPane.margin>
+    </Label>
+
+</GridPane>
+

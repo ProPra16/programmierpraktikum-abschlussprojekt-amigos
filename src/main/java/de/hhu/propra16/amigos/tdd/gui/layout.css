@@ -35,7 +35,7 @@
 .button:hover {
     -fx-background-color: #9ACD32;
 }
-#combobox{
+#listView{
     -fx-border: 0,5px solid black;
     -fx-padding:.75em 1em .5em 1em;
     -fx-background-color:#7cafc2;
@@ -60,5 +60,13 @@
 
 }
 
+
+
+
+.keyword { -fx-fill: darkred; }
+.string {-fx-fill:red;}
+.brace {-fx-fill:blue;}
+.bracket {-fx-fill:lightslategray;}
+.comment {-fx-fill:gray;}
 
 

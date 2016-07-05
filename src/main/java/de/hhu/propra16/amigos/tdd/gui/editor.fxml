@@ -1,0 +1,53 @@
+<?import javafx.scene.layout.GridPane?>
+<?import java.net.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import de.hhu.propra16.amigos.tdd.gui.controls.TDDCodeArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+
+<GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.ExerciseController"
+          xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
+    <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+    <stylesheets>
+        <URL value="@layout.css" />
+    </stylesheets>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50" />
+        <ColumnConstraints percentWidth="50" />
+    </columnConstraints>
+
+    <Label fx:id="exerciseNameLabel" text="Exercise" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" GridPane.halignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+    <GridPane alignment="TOP_LEFT" hgap="10" vgap="10" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" maxHeight="150" prefHeight="150" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+        <ImageView fx:id="cycleImage" GridPane.columnIndex="0">
+            <Image url="@green.png" />
+        </ImageView>
+        <ImageView fx:id="cycleImageOverlay" GridPane.columnIndex="0" opacity="1">
+            <Image url="@green.png" />
+        </ImageView>
+        <Button id="run" text="Compile and run Tests" GridPane.columnIndex="1" onAction="#runCode">
+            <graphic>
+                <ImageView>
+                    <Image url="@runButton.png" />
+                </ImageView>
+            </graphic>
+        </Button>
+        <VBox GridPane.columnIndex="2">
+            <Label fx:id="compileStatusLabel" text="Code + Tests compile without error" />
+            <Label fx:id="testStatusLabel" text="5 Test errors" />
+        </VBox>
+        <TextArea fx:id="compilerOutput" text="Compiler Output" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
+        <Label fx:id="timerLabel" id="timer" text="02:00" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.halignment="RIGHT" />
+
+
+        <!--<Button id="status" text="" GridPane.columnIndex="3" GridPane.rowIndex="10" prefWidth="12.5" prefHeight="500.0"/>-->
+    </GridPane>
+    <TDDCodeArea text="Code" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+    <TDDCodeArea text="Test" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+
+
+
+</GridPane>
