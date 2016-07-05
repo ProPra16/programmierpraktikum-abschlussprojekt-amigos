@@ -1,0 +1,68 @@
+<exercises>
+    <exercise>
+
+        <name>
+            Name der Aufgabe
+        </name>
+
+        <description>
+            Aufgabenstellung
+        </description>
+
+        <classes>
+
+            <class name="Name der Klasse">
+                Die Klasse als einfacher Text
+            </class>
+
+            <tests>
+
+                <test name="name des tests">
+                    Test
+                </test>
+
+            </tests>
+
+        </classes>
+
+        <options>
+
+            <option name="Option Name" value="Wert gegebenfalls" />
+
+        </options>
+
+    </exercise>
+    <exercise>
+
+        <name>
+            Testaufabe 2
+        </name>
+
+        <description>
+            Aufgabenstellung
+        </description>
+
+        <classes>
+
+            <class name="Name der Klasse">
+                Die Klasse als einfacher Text
+            </class>
+
+            <tests>
+
+                <test name="name des tests">
+                    Test
+                </test>
+
+            </tests>
+
+        </classes>
+
+        <options>
+
+            <option name="Option Name" value="Wert gegebenfalls" />
+
+        </options>
+
+    </exercise>
+</exercises>
