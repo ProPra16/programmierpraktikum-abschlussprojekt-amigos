@@ -20,6 +20,8 @@ public interface LogikInterface {
 
     public boolean isBabySteps();
 
+    public boolean setATDDTest(String pTest);
+
     public CodeObject BabyStepBack();
 
     public boolean tryCompileTest();
