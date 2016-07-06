@@ -1,5 +1,6 @@
 package de.hhu.propra16.amigos.tdd.logik;
 
+import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
 import vk.core.api.CompilationUnit;
 import vk.core.api.TestFailure;
@@ -9,86 +10,65 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class LogikHandler implements LogikInterface{
-    private Katalog katalog;
 
-    private Collection<TestFailure> latestFailures;
+    Exercise aufgabe;
+    TDDState status;
+    boolean aTDD;
+    boolean babySteps;
 
-    public LogikHandler(Katalog pKatalog) {
-        katalog = pKatalog;
+    public LogikHandler(Exercise pAufgabe) {
+        aufgabe = pAufgabe;
+
+        aTDD.
+
+
     }
 
-    /**
-     * Zum jetzigen Zeitpunkt gilt, dass für das
-     * korrekte Ausführen der Funktion die Änderung
-     * durch den GUI-Controller gespeichert sind.
-     *
-     * Im Falle true haben alle Tests bestanden.
-     */
-    public boolean pruefeAbgabe(int exercise) {
+    public void setCode(String code) {
 
-        ArrayList<CompilationUnit> units = new ArrayList<>();
-        for(String key : katalog.getClasses(exercise).keySet()) {
-            units.add(new CompilationUnit(key, katalog.getClasses(exercise).get(key), false));
-        }
-
-        for(String key : katalog.getTests(exercise).keySet()) {
-            units.add(new CompilationUnit(key, katalog.getTests(exercise).get(key),true));
-        }
-
-        InternalCompiler compiled = new InternalCompiler((CompilationUnit[]) units.toArray());
-
-        compiled.compileAndRunTests();
-        latestFailures = compiled.getTestResult().getTestFailures();
-
-        return compiled.getTestResult().getNumberOfFailedTests() == 0;
     }
 
-    public Collection<TestFailure> getLatestFailures() {
-        return latestFailures;
+    public void setTest(String test){
+
     }
 
-    public boolean isBabysteps(int exercise) {
-        return katalog.getOptions(exercise).containsKey("babysteps");
+    public TDDState getState(){
+
     }
 
-    public boolean isATDD(int exercise) {
-        return katalog.getOptions(exercise).containsKey("atdd");
+    public boolean switchState(TDDState newState){
+
     }
 
-    public int giveTime(int exercise) {
-        if(isBabysteps(exercise)) return Integer.parseInt(katalog.getOptions(exercise).get("babysteps"));
-        else return -1;
+    public boolean isATDD(){
+
     }
 
-    public String[] failedTests() {
-        TestFailure[] failures = (TestFailure[]) latestFailures.toArray();
+    public boolean isATDDpassing(){
 
-        String[] rueckgabe = new String[failures.length];
-
-        for(int i = 0; i < rueckgabe.length; i++) {
-            rueckgabe[i] = failures[i].getTestClassName();
-        }
-
-        return rueckgabe;
     }
 
-    public String[] failedMethods(String testName) {
-        TestFailure[] failures = (TestFailure[]) latestFailures.toArray();
-        ArrayList<TestFailure> failuresList = new ArrayList<>();
+    public boolean isBabySteps(){
 
-        for(int i = 0; i < failures.length; i++) {
-            if(failures[i].getMethodName().equals(testName)) {
-                failuresList.add(failures[i]);
-            }
-        }
+    }
 
-        failures = (TestFailure[]) failuresList.toArray();
-        String[] rueckgabe = new String[failures.length];
+    public CodeObject BabyStepBack(){
 
-        for(int i = 0; i < rueckgabe.length; i++) {
-            rueckgabe[i] = failures[i].getMethodName();
-        }
+    }
 
-        return rueckgabe;
+    public boolean tryCompileTest(){
+
+    }
+
+    public boolean tryCompileCode(){
+
+    }
+
+    public boolean isOneTestFailing(){
+
+    }
+
+    public String[] getFailingTests(){
+
     }
 }
