@@ -137,6 +137,20 @@ public class LogikHandler implements LogikInterface{
         return babySteps;
     }
 
+    public int babyStepsTime() {
+        if(babySteps) {
+            HashMap<String, String> options = aufgabe.getOptions();
+            try {
+                return Integer.parseInt(options.get("babysteps"));
+            }
+            catch(Exception e) {
+                return -1;
+            }
+        }
+
+        else return -2;
+    }
+
     public CodeObject BabyStepBack(){
         return lastPassed;
     }
