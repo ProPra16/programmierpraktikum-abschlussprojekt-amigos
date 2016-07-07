@@ -28,5 +28,11 @@ public class LogikHandlerTests {
         simpleHandler.setCode("fail");
         assertFalse(simpleHandler.tryCompileCode());
      }
+    @Test
+    public void test_tryCompileCode_good_code() {
+        classes.put("Good","Good");
+        simpleHandler.setCode("public class Good { }");
+        assertTrue(simpleHandler.tryCompileCode());
+    }
    // @Test
 }
