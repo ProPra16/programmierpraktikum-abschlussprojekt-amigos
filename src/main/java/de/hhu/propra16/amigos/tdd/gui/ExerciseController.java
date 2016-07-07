@@ -29,7 +29,7 @@ public class ExerciseController {
     private TDDState displayedState = TDDState.WRITE_FAILING_TEST;
 
     @FXML
-    private Label exerciseNameLabel, compileStatusLabel, testStatusLabel, atddStatusLabel, timerLabel;
+    private Label compileStatusLabel, testStatusLabel, atddStatusLabel, timerLabel;
     @FXML
     private ImageView cycleImage, cycleImageOverlay;
     @FXML
@@ -49,8 +49,8 @@ public class ExerciseController {
     @FXML
     private VBox babyStepContainer;
 
-    private Integer timerSecondsLeft;
-    private Integer babyStepsTime;
+    private Integer timerSecondsLeft = 120;
+    private Integer babyStepsTime = 120;
     private Timer babyStepsTimer;
     public void initialize(Stage selectExerciseStage, Katalog loadedCatalog, Exercise selectedExercise){
         this.selectExerciseStage = selectExerciseStage;
@@ -58,10 +58,11 @@ public class ExerciseController {
         this.exercise = selectedExercise;
 
         hideUnusedTabs();
-        if(true){ //isAtdd
+        if(false){ //isAtdd
             menuPane.getChildren().remove(babyStepContainer);
             atddStatusLabel.setVisible(false);
         }
+        startBabyStepTimer();
     }
 
     public void runCode(){
@@ -81,7 +82,7 @@ public class ExerciseController {
                     @Override
                     public void run() {
                         timerSecondsLeft--;
-                        timerLabel.setText(String.format("%03d:%03d",timerSecondsLeft/60, timerSecondsLeft % 60));
+                        timerLabel.setText(String.format("%02d:%02d",timerSecondsLeft/60, timerSecondsLeft % 60));
                         if(timerSecondsLeft == 0) babyStepTimeout();
                     }
                 });
@@ -150,11 +151,11 @@ public class ExerciseController {
             if(!codeTabPane.getTabs().contains(testTab)) codeTabPane.getTabs().add(1, testTab);
         }
 
-        if(true){//isAtdd()
+        if(false){//isAtdd()
             if(codeTabPane.getTabs().contains(atddTab)) codeTabPane.getTabs().remove(atddTab);
         }
 
-        if(true && this.displayCodeTestsBesideCheckbox.isSelected()){ // isAtdd()
+        if(false && this.displayCodeTestsBesideCheckbox.isSelected()){ // isAtdd()
             if(!codeTabPane.getStyleClass().contains("hide-bar")) codeTabPane.getStyleClass().add("hide-bar");
         }else{
             if(codeTabPane.getStyleClass().contains("hide-bar")) codeTabPane.getStyleClass().remove("hide-bar");

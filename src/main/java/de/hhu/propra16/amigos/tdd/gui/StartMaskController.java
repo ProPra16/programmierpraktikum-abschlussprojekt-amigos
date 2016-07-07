@@ -16,6 +16,7 @@ public class StartMaskController {
             oldStage.close();
 
             Stage stage = new Stage();
+            stage.setTitle("Select your TDD exercise");
             Parent root = FXMLLoader.load(getClass().getResource("choose_exercise.fxml"));
             stage.setScene(new Scene(root, 400, 500));
             stage.show();

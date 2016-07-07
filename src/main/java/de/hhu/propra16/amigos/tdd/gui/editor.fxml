@@ -15,7 +15,7 @@
 
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.ExerciseController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
-    <padding><Insets top="40" bottom="10" left="20" right="20"/></padding>
+    <padding><Insets top="10" bottom="10" left="20" right="20"/></padding>
     <stylesheets>
         <URL value="@layout.css" />
     </stylesheets>
@@ -23,9 +23,7 @@
         <ColumnConstraints percentWidth="50" />
         <ColumnConstraints percentWidth="50" />
     </columnConstraints>
-    <Label fx:id="exerciseNameLabel" text="Exercise" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" GridPane.halignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" />
     <GridPane fx:id="menuPane" alignment="TOP_LEFT" hgap="10" vgap="10" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" maxHeight="150" prefHeight="150" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
-
         <ImageView fx:id="cycleImage" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <Image url="@red.png" />
         </ImageView>
@@ -43,14 +41,14 @@
                     <Tooltip text="Compile and Run your Code and Tests"/>
                 </tooltip>
             </Button>
-            <Button fx:id="nextPhaseButton" text="Next Phase" disable="true">
+            <Button fx:id="nextPhaseButton" id="next" text="Next Phase" disable="true">
                 <graphic>
                     <ImageView>
                         <Image url="@next.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="prevPhaseButton" text="Prev Phase" disable="true">
+            <Button fx:id="prevPhaseButton" id="prev" text="Prev Phase" disable="true">
                 <graphic>
                     <ImageView>
                         <Image url="@back.png" />
@@ -58,21 +56,17 @@
                 </graphic>
             </Button>
 
-            <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Display Code+Tests beside" selected="true" onAction="#checkBesideChanged">
-                <VBox.margin>
-                    <Insets top="30" />
-                </VBox.margin>
-            </CheckBox>
+            <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Code/Tests beside" selected="true" onAction="#checkBesideChanged" />
         </VBox>
 
         <VBox GridPane.columnIndex="2" spacing="10">
-            <Label fx:id="testStatusLabel" text="Tests do not compile" />
-            <Label fx:id="compileStatusLabel" text="Code does not compile" />
-            <Label fx:id="atddStatusLabel" text="Accept. Test does not compile" />
+            <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
+            <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
+            <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
         </VBox>
-        <TextArea fx:id="compilerOutput" text="Compiler/Test Output" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
+        <TextArea fx:id="compilerOutput" text="Compiler/Test Output will be here" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
         <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
-            <Label text="${'Time left\nfor this Phase\nbefore Reset:'}" />
+            <Label id="timerInfoLabel" text="${'Limit active:\n\nTime left\nfor this Phase\nbefore Reset:'}"/>
             <Label fx:id="timerLabel" id="timer" text="02:00" />
         </VBox>
     </GridPane>
