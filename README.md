@@ -3,3 +3,9 @@
 ##Namensliste:##
 
 Eduard, Oliver, Lucas, Niklas und Josias
+
+###Build###
+```gradle build```
+
+###Run Application###
+```gradle run```
