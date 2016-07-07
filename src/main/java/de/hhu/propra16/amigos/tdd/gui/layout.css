@@ -70,3 +70,11 @@
 .comment {-fx-fill:gray;}
 
 
+
+.hide-bar{
+    fx-tab-max-height:0;
+}
+.hide-bar .tab-header-area{
+    visibility: hidden;
+    -fx-max-height:0;
+}

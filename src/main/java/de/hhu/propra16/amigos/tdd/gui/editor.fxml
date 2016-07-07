@@ -9,6 +9,9 @@
 <?import de.hhu.propra16.amigos.tdd.gui.controls.TDDCodeArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.CheckBox?>
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.ExerciseController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
     <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
@@ -19,34 +22,70 @@
         <ColumnConstraints percentWidth="50" />
         <ColumnConstraints percentWidth="50" />
     </columnConstraints>
-
     <Label fx:id="exerciseNameLabel" text="Exercise" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" GridPane.halignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" />
-    <GridPane alignment="TOP_LEFT" hgap="10" vgap="10" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" maxHeight="150" prefHeight="150" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+    <GridPane fx:id="menuPane" alignment="TOP_LEFT" hgap="10" vgap="10" maxWidth="Infinity" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" maxHeight="150" prefHeight="150" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+
         <ImageView fx:id="cycleImage" GridPane.columnIndex="0">
-            <Image url="@green.png" />
+            <Image url="@red.png" />
         </ImageView>
-        <ImageView fx:id="cycleImageOverlay" GridPane.columnIndex="0" opacity="1">
-            <Image url="@green.png" />
+        <ImageView fx:id="cycleImageOverlay" GridPane.columnIndex="0">
+            <Image url="@red.png" />
         </ImageView>
-        <Button id="run" text="Compile and run Tests" GridPane.columnIndex="1" onAction="#runCode">
-            <graphic>
-                <ImageView>
-                    <Image url="@runButton.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-        <VBox GridPane.columnIndex="2">
-            <Label fx:id="compileStatusLabel" text="Code + Tests compile without error" />
-            <Label fx:id="testStatusLabel" text="5 Test errors" />
+        <VBox GridPane.columnIndex="1" spacing="10">
+            <Button id="run" text="Compile and run"  onAction="#runCode">
+                <graphic>
+                    <ImageView>
+                        <Image url="@runButton.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="nextPhaseButton" text="Next Phase" disable="true" />
+            <Button fx:id="prevPhaseButton" text="Prev Phase" disable="true" />
+            <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Display Code+Tests beside" selected="true" onAction="#checkBesideChanged">
+                <VBox.margin>
+                    <Insets top="30" />
+                </VBox.margin>
+            </CheckBox>
         </VBox>
-        <TextArea fx:id="compilerOutput" text="Compiler Output" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
-        <Label fx:id="timerLabel" id="timer" text="02:00" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.halignment="RIGHT" />
 
-
-        <!--<Button id="status" text="" GridPane.columnIndex="3" GridPane.rowIndex="10" prefWidth="12.5" prefHeight="500.0"/>-->
+        <VBox GridPane.columnIndex="2" spacing="10">
+            <Label fx:id="testStatusLabel" text="Tests do not compile" />
+            <Label fx:id="compileStatusLabel" text="Code does not compile" />
+            <Label fx:id="atddStatusLabel" text="Accept. Test does not compile" />
+        </VBox>
+        <TextArea fx:id="compilerOutput" text="Compiler/Test Output" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
+        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+            <Label text="${'Time left\nfor this Phase\nbefore Reset:'}" />
+            <Label fx:id="timerLabel" id="timer" text="02:00" />
+        </VBox>
     </GridPane>
-    <TDDCodeArea text="Code" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-    <TDDCodeArea text="Test" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+    <TabPane fx:id="codeTabPane" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnSpan="2" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Code/Tests" fx:id="codeTestTab">
+                <content>
+                    <GridPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" fx:id="codeTestGridPane">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50" />
+                            <ColumnConstraints percentWidth="50" />
+                        </columnConstraints>
+                        <TDDCodeArea fx:id="codeArea" text="Code" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <TDDCodeArea fx:id="testArea" text="Test" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    </GridPane>
+                </content>
+            </Tab>
+            <Tab text="Tests" fx:id="testTab">
+                <content>
+
+                </content>
+            </Tab>
+            <Tab text="Acceptance Tests" fx:id="atddTab">
+                <content>
+                    <TDDCodeArea fx:id="atddArea" text="class ATDD {&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+
 
 
 

@@ -46,6 +46,7 @@ public class ChooseExerciseController implements Initializable{
                 listViewItemList.add(i, loaded.getName(i));
             }
             this.listView.setItems(listViewItemList);
+            if(loaded.size() != 0) this.listView.getSelectionModel().select(0);
             this.catalogLoadedLabel.setText("Currently loaded: " + file.getName());
             this.playTransition();
         }catch(Exception ex){
@@ -105,6 +106,8 @@ public class ChooseExerciseController implements Initializable{
             ex.printStackTrace();;
         }
     }
+
+
 
 
 }
