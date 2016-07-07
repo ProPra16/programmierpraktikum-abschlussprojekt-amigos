@@ -16,7 +16,7 @@
     </Label>
     <Button id="start" text="Start" onAction="#manageStart"
             GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
-    <Label id="autor" text="by Amigos"
+    <Label id="author" text="by Amigos"
            GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
         <GridPane.margin>
             <Insets bottom="15" />
