@@ -101,7 +101,6 @@ public class ExerciseController {
         FadeTransition ft = new FadeTransition(Duration.millis(800), cycleImage);
         ft.setFromValue(1);
         ft.setToValue(0);
-
         RotateTransition rotateTransition2 = new RotateTransition(Duration.millis(800), cycleImageOverlay);
         rotateTransition2.setFromAngle(180);
         rotateTransition2.setToAngle(0);
@@ -118,12 +117,13 @@ public class ExerciseController {
         });
         FadeTransition ft2 = new FadeTransition(Duration.millis(800), cycleImageOverlay);
         ft2.setFromValue(0);
-        ft2.setToValue(0);
+        ft2.setToValue(1);
 
         ft.play();
         cycleImageOverlay.setImage(newImg);
         rotateTransition.play();
         ft.play();
+        ft2.play();
         rotateTransition2.play();
     }
 
