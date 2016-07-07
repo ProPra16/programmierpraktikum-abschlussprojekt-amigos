@@ -10,13 +10,23 @@ import org.junit.Test;
 import java.util.HashMap;
 
 public class LogikHandlerTests {
-    private Exercise emptyExercise = new Exercise("", "", new HashMap<>(),new HashMap<>(), new HashMap<>());
+    HashMap<String, String> classes = new HashMap<>();
+    HashMap<String, String> tests = new HashMap<>();
+    HashMap<String, String> options = new HashMap<>();
+    private Exercise emptyExercise = new Exercise("name", "desc", classes, tests, options);
     private LogikHandler simpleHandler = new LogikHandler(emptyExercise);
 
     @Test
-    public void test_tryCompileCode() {
+    public void test_tryCompileCode_no_code() {
+        classes.put("test","fail");
         simpleHandler.setCode("");
-        assertTrue(simpleHandler.tryCompileCode());
+        assertFalse(simpleHandler.tryCompileCode());
+    }
+    @Test
+    public void test_tryCompileCode_bad_code() {
+        classes.put("test","fail");
+        simpleHandler.setCode("fail");
+        assertFalse(simpleHandler.tryCompileCode());
      }
    // @Test
 }
