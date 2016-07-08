@@ -48,8 +48,13 @@ public class LogikHandler implements LogikInterface{
 
     public void setCode(String pCode) {
         code = pCode;
+        try {
+            codeUnit = new CompilationUnit((String) aufgabe.getClasses().keySet().toArray()[0], code, false);
+        }
 
-        codeUnit = new CompilationUnit((String) aufgabe.getClasses().keySet().toArray()[0], code, false);
+        catch(Exception e) {
+            // Exception wird im unwahrscheinlichen Fall gefangen
+        }
     }
 
     public void setTest(String pTest){
