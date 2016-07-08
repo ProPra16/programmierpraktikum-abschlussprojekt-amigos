@@ -16,11 +16,13 @@ public class LogikHandler implements LogikInterface{
 
     CodeObject lastPassed; // in case of babysteps
 
-    String code;
+    CodeObject aktuell;
+
+    /*String code;
     CompilationUnit codeUnit;
 
     String test;
-    CompilationUnit testUnit;
+    CompilationUnit testUnit;*/
 
     String aTDDTest;
     CompilationUnit aTDDTestUnit;
@@ -28,6 +30,9 @@ public class LogikHandler implements LogikInterface{
     public LogikHandler(Exercise pAufgabe) {
 
         aufgabe = pAufgabe;
+
+        lastPassed = new CodeObject();
+        aktuell = new CodeObject();
 
         HashMap<String, String> options = aufgabe.getOptions();
 
@@ -47,15 +52,23 @@ public class LogikHandler implements LogikInterface{
     }
 
     public void setCode(String pCode) {
-        code = pCode;
+        try {
+            aktuell.setCode((String) aufgabe.getClasses().keySet().toArray()[0], pCode);
+        }
 
-        codeUnit = new CompilationUnit((String) aufgabe.getClasses().keySet().toArray()[0], code, false);
+        catch(Exception e) {
+            // Exception wird im unwahrscheinlichen Fall gefangen
+        }
     }
 
     public void setTest(String pTest){
-        test = pTest;
+        try {
+            aktuell.setCode((String) aufgabe.getTests().keySet().toArray()[0], pTest);
+        }
 
-        testUnit = new CompilationUnit((String) aufgabe.getTests().keySet().toArray()[0], test, true);
+        catch(Exception e) {
+            // Exception wird im unwahrscheinlichen Fall gefangen
+        }
     }
 
     public TDDState getState(){
@@ -63,31 +76,88 @@ public class LogikHandler implements LogikInterface{
     }
 
     public boolean switchState(TDDState newState){
-        if(status == TDDState.MAKE_PASS_TEST) {
-            if(newState == TDDState.WRITE_FAILING_TEST && tryCompileCode()) {
-                status = newState;
-                return true;
+        if(!aTDD) {
+
+            if (status == TDDState.REFACTOR) {
+                if (newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() && tryCompileCode() && !isOneTestFailing()) {
+                    lastPassed.convertToValuesOf(aktuell);
+                    status = newState;
+                    return true;
+                }
             }
 
-            if(newState == TDDState.REFACTOR && tryCompileCode() && tryCompileTest() && !isOneTestFailing()) {
-                status = newState;
-                return true;
+            if (status == TDDState.WRITE_FAILING_TEST) {
+                if (newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
+                    status = newState;
+                    return true;
+                }
+
+                if (newState == TDDState.REFACTOR) {
+                    status = newState;
+                    return true;
+                }
+            }
+
+            if (status == TDDState.MAKE_PASS_TEST) {
+                if (newState == TDDState.WRITE_FAILING_TEST) {
+                    status = newState;
+                    return true;
+                }
+
+                if (newState == TDDState.REFACTOR && tryCompileCode() && tryCompileTest() && !isOneTestFailing()) {
+                    lastPassed.convertToValuesOf(aktuell);
+                    status = newState;
+                    return true;
+                }
             }
         }
 
-        if(status == TDDState.REFACTOR) {
-            if(newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() && tryCompileCode() && !isOneTestFailing()) {
-                status = newState;
-                lastPassed = new CodeObject(code, test); // It will also be stored if ATDD is not activated
-                return true;
-            }
-        }
+        else {
+            if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
+                if(newState == TDDState.REFACTOR) {
+                    status = newState;
+                    return true;
+                }
 
-        if(status == TDDState.WRITE_FAILING_TEST) {
-            if(newState == TDDState.MAKE_PASS_TEST && tryCompileTest() && isOneTestFailing()) {
-                status = newState;
-                return true;
+                if(newState == TDDState.WRITE_FAILING_TEST && !isATDDpassing()) {
+                    status = newState;
+                    return true;
+                }
             }
+
+            if(status == TDDState.WRITE_FAILING_TEST) {
+                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
+                    status = newState;
+                    return true;
+                }
+                if(newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
+                    status = newState;
+                    return true;
+                }
+            }
+
+            if(status == TDDState.MAKE_PASS_TEST) {
+                if(newState == TDDState.WRITE_FAILING_TEST) {
+                    status = newState;
+                    return true;
+                }
+
+                if(newState == TDDState.REFACTOR && !isOneTestFailing()) {
+                    lastPassed.convertToValuesOf(aktuell);
+                    status = newState;
+                    return true;
+                }
+            }
+
+            if(status == TDDState.REFACTOR) {
+                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && !isOneTestFailing()) {
+                    lastPassed.convertToValuesOf(aktuell);
+                    status = newState;
+                    return true;
+                }
+            }
+
+
         }
 
         return false;
@@ -98,13 +168,13 @@ public class LogikHandler implements LogikInterface{
     }
 
     public boolean isATDDpassing(){
-        if(aTDDTest == null || aTDDTestUnit == null || codeUnit == null)
+        if(aTDDTest == null || aTDDTestUnit == null || aktuell.getCodeUnit() == null)
             return false;
 
         if(!tryCompileCode())
             return false;
 
-        InternalCompiler compile = new InternalCompiler(new CompilationUnit[] {aTDDTestUnit, codeUnit});
+        InternalCompiler compile = new InternalCompiler(new CompilationUnit[] {aTDDTestUnit, aktuell.getCodeUnit()});
 
         try {
             compile.compileAndRunTests();
@@ -120,7 +190,7 @@ public class LogikHandler implements LogikInterface{
     }
 
     public boolean setATDDTest(String pTest) {
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {new CompilationUnit(pTest, "ATDD", true), codeUnit});
+        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {new CompilationUnit(pTest, "ATDD", true), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
         if(compileTest.getCompilerResult().hasCompileErrors()) {
@@ -151,15 +221,20 @@ public class LogikHandler implements LogikInterface{
         else return -2;
     }
 
+    public CodeObject getAktuell() {
+        return aktuell;
+    }
+
     public CodeObject BabyStepBack(){
+        aktuell.convertToValuesOf(lastPassed);
         return lastPassed;
     }
 
     public boolean tryCompileTest(){
-        if(testUnit == null || codeUnit == null)
+        if(aktuell.getTestUnit() == null || aktuell.getCodeUnit() == null)
             return false;
 
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testUnit, codeUnit});
+        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getTestUnit(), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
         if(compileTest.getCompilerResult().hasCompileErrors()) {
@@ -172,10 +247,10 @@ public class LogikHandler implements LogikInterface{
     }
 
     public boolean tryCompileCode(){
-        if(codeUnit == null)
+        if(aktuell.getCodeUnit() == null)
             return false;
 
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {codeUnit});
+        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
         if(compileTest.getCompilerResult().hasCompileErrors()) {
@@ -189,21 +264,25 @@ public class LogikHandler implements LogikInterface{
 
 
     public boolean isOneTestFailing(){
-        if(testUnit == null || codeUnit == null)
-            return false;
+        try {
+            if (aktuell.getTestUnit() == null || aktuell.getCodeUnit() == null)
+                return false;
 
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testUnit, codeUnit});
-        compileTest.compileAndRunTests();
+            InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[]{aktuell.getTestUnit(), aktuell.getCodeUnit()});
+            compileTest.compileAndRunTests();
 
-        return compileTest.getTestResult().getNumberOfFailedTests() > 0;
+            return compileTest.getTestResult().getNumberOfFailedTests() > 0;
+        } catch (Exception e) {
+            return true;
+        }
 
     }
 
     public String[] getFailingTests(){
-        if(testUnit == null || codeUnit == null)
+        if(aktuell.getTestUnit() == null || aktuell.getCodeUnit() == null)
             return new String[0];
 
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testUnit, codeUnit});
+        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getTestUnit(), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
         TestFailure[] fails = (TestFailure[]) compileTest.getTestResult().getTestFailures().toArray();
@@ -211,7 +290,7 @@ public class LogikHandler implements LogikInterface{
         String[] rueckgabe = new String[fails.length];
 
         for(int i = 0; i < rueckgabe.length; i++) {
-            rueckgabe[i] = fails[i].getMethodName();
+            rueckgabe[i] = fails[i].getMessage();
         }
 
         return rueckgabe;

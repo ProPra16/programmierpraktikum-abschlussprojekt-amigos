@@ -6,6 +6,9 @@ import vk.core.api.TestFailure;
 import java.util.Collection;
 
 public interface LogikInterface {
+
+    // Información: Interface nicht für die Finale Version vorgesehen. Beim Code aufräumen auf jeden Fall entfernen, sonst sieht er noch aus wie bei Hempels hinter der Firewall.
+
     public void setCode(String code);
 
     public void setTest(String test);
