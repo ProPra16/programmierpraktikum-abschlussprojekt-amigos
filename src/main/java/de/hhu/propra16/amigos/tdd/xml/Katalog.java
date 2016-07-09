@@ -38,4 +38,12 @@ public class Katalog {
         return exercises.get(a).getOptions();
     }
 
+    public Exercise getExercise(int a) {
+        if(a >= 0 && a < exercises.size())
+            return exercises.get(a);
+
+        else
+            return null;
+    }
+
 }
