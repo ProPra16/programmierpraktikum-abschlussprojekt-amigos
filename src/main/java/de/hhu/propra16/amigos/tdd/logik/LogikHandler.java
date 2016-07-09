@@ -30,18 +30,11 @@ public class LogikHandler implements LogikInterface{
 
         HashMap<String, String> options = aufgabe.getOptions();
 
-        if(options.keySet().contains("ATDD"))
-            aTDD = true;
-        else
-            aTDD = false;
-
-        if(options.keySet().contains("babysteps"))
-            babySteps = true;
-        else
-            babySteps = false;
+        aTDD = options.keySet().contains("ATDD");
+        babySteps = options.keySet().contains("babysteps");
 
         status = TDDState.WRITE_FAILING_TEST;
-
+        if(aTDD) status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
 
     }
 
