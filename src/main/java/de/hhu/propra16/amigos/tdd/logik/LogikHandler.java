@@ -7,7 +7,7 @@ import vk.core.internal.InternalCompiler;
 
 import java.util.HashMap;
 
-public class LogikHandler implements LogikInterface{
+public class LogikHandler {
 
     Exercise aufgabe;
     TDDState status;
