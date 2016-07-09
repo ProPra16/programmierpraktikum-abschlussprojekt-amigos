@@ -289,4 +289,12 @@ public class LogikHandler implements LogikInterface{
 
         return rueckgabe;
     }
+
+    public TDDState getNextState() {
+        if(status == TDDState.WRITE_FAILING_TEST) return TDDState.MAKE_PASS_TEST;
+        if(status == TDDState.MAKE_PASS_TEST) return TDDState.REFACTOR;
+        if(status == TDDState.REFACTOR && aTDD) return TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
+        if(status == TDDState.REFACTOR && !aTDD) return TDDState.WRITE_FAILING_TEST;
+        if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) return TDDState.WRITE_FAILING_TEST;
+    }
 }
