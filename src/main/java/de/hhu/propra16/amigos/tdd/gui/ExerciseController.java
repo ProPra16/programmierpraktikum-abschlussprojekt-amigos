@@ -29,11 +29,11 @@ public class ExerciseController {
     private TDDState displayedState = TDDState.WRITE_FAILING_TEST;
 
     @FXML
-    private Label compileStatusLabel, testStatusLabel, atddStatusLabel, timerLabel;
+    private Label atddStatusLabel, timerLabel, exerciseLabel, nextStep;
     @FXML
     private ImageView cycleImage, cycleImageOverlay;
     @FXML
-    private TextArea compilerOutput;
+    private TextArea compilerArea;
     @FXML
     private CheckBox displayCodeTestsBesideCheckbox;
     @FXML
@@ -45,9 +45,9 @@ public class ExerciseController {
     @FXML
     private GridPane menuPane, codeTestGridPane;
     @FXML
-    private Button nextPhaseButton, prevPhaseButton;
+    private Button nextPhaseButton, prevPhaseButton, statusButton;
     @FXML
-    private VBox babyStepContainer;
+    private VBox babyStepContainer, exerciseContainer;
 
     private Integer timerSecondsLeft = 120;
     private Integer babyStepsTime = 120;
@@ -66,7 +66,10 @@ public class ExerciseController {
     }
 
     public void runCode(){
+
         switchStateAnimation(TDDState.MAKE_PASS_TEST);//Example
+        
+
     }
 
     private void startBabyStepTimer(){
@@ -92,7 +95,7 @@ public class ExerciseController {
     }
 
     private void babyStepTimeout(){
-
+        babyStepsTimer.cancel();
     }
 
     private void switchStateAnimation(TDDState newState){

@@ -30,25 +30,25 @@
         <ImageView fx:id="cycleImageOverlay" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <Image url="@red.png" />
         </ImageView>
-        <VBox GridPane.columnIndex="1" spacing="10">
-            <Button id="run" text="Compile and run"  onAction="#runCode">
+        <VBox GridPane.columnIndex="3" spacing="10">
+            <Button id="controllButton" text="Compile and run"  onAction="#runCode">
                 <graphic>
                     <ImageView>
-                        <Image url="@runButton.png" />
+                        <Image url="@play.png" />
                     </ImageView>
                 </graphic>
                 <tooltip>
                     <Tooltip text="Compile and Run your Code and Tests"/>
                 </tooltip>
             </Button>
-            <Button fx:id="nextPhaseButton" id="next" text="Next Phase" disable="true">
+            <Button fx:id="nextPhaseButton" id="controllButton" text="Next Phase" disable="false">
                 <graphic>
                     <ImageView>
                         <Image url="@next.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="prevPhaseButton" id="prev" text="Prev Phase" disable="true">
+            <Button fx:id="prevPhaseButton" id="controllButton" text="Prev Phase" disable="false">
                 <graphic>
                     <ImageView>
                         <Image url="@back.png" />
@@ -59,17 +59,16 @@
             <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Code/Tests beside" selected="true" onAction="#checkBesideChanged" />
         </VBox>
 
-        <VBox GridPane.columnIndex="2" spacing="10">
-            <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
-            <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
-            <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
-        </VBox>
-        <TextArea fx:id="compilerOutput" text="Compiler/Test Output will be here" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
-        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="6" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
             <Label id="timerInfoLabel" text="${'Limit active:\n\nTime left\nfor this Phase\nbefore Reset:'}"/>
             <Label fx:id="timerLabel" id="timer" text="02:00" />
         </VBox>
+        <VBox fx:id="exerciseContainerContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+            <Label fx:id="exerciseLabel" text="${'AufgabeXY\n\nAufgabenbeschreibung'}"/>
+            <Label id="step" fx:id="nextStep" text="${'Your next step:\nDo something...'}" />
+        </VBox>
     </GridPane>
+
     <TabPane fx:id="codeTabPane" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnSpan="2" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Code/Tests" fx:id="codeTestTab">
@@ -94,8 +93,14 @@
                     <TDDCodeArea styleClass="editor" fx:id="atddArea" text="class ATDD {&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
+            <Tab text="Output">
+                <content>
+                    <TextArea styleClass="editor" fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false"/>
+                </content>
+            </Tab>
         </tabs>
     </TabPane>
+
 
 
 
