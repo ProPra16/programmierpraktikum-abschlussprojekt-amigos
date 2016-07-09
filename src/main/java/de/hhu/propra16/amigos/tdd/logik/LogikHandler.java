@@ -18,12 +18,6 @@ public class LogikHandler implements LogikInterface{
 
     CodeObject aktuell;
 
-    /*String code;
-    CompilationUnit codeUnit;
-
-    String test;
-    CompilationUnit testUnit;*/
-
     String aTDDTest;
     CompilationUnit aTDDTestUnit;
 
