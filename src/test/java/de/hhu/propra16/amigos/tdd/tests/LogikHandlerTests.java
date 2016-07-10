@@ -10,8 +10,14 @@ import org.junit.Test;
 import java.util.HashMap;
 
 public class LogikHandlerTests {
-    private String testImports = "import static org.junit.Assert.*;\n" +
+    private final String testImports = "import static org.junit.Assert.*;\n" +
             "import org.junit.Test;\n";
+    private final String onePassingTest = testImports +
+            "public class Good {  \n" +
+            "@Test\n" +
+            " public void passing() { \n" +
+            "assertTrue(true);\n" +
+            " } }";
     HashMap<String, String> classes = new HashMap<>();
     HashMap<String, String> tests = new HashMap<>();
     HashMap<String, String> options = new HashMap<>();
@@ -70,13 +76,8 @@ public class LogikHandlerTests {
     public void test_isOneTestFailing_false() {
         classes.put("Code","Code");
         simpleHandler.setCode("public class Code { }");
-        tests.put("Fail","Fail");
-        simpleHandler.setTest(testImports +
-                "public class Fail {  \n" +
-                "@Test\n" +
-                " public void fail() { \n" +
-                "assertTrue(true);\n" +
-                " } }");
+        tests.put("Good","passing");
+        simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
     @Test
@@ -84,15 +85,17 @@ public class LogikHandlerTests {
         classes.put("Code","Code");
         simpleHandler.setCode("public class Code { }");
         tests.put("Good","passing");
-        simpleHandler.setTest(testImports +
-                "public class Good { \n" +
-                "@Test\n" +
-                "public void passing() { \n" +
-                " assertTrue(true);\n" +
-                " } \n" +
-                "}\n");
+        simpleHandler.setTest(onePassingTest);
 
         assertTrue(simpleHandler.tryCompileTest());
+    }
+    @Test
+    public void test_getFailingTests_get_none() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Good","passing");
+        simpleHandler.setTest(onePassingTest);
+        assertEquals(simpleHandler.getFailingTests().length,0);
     }
 
    // @Test
