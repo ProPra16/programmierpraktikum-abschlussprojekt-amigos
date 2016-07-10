@@ -18,6 +18,12 @@ public class LogikHandlerTests {
             " public void passing() { \n" +
             "assertTrue(true);\n" +
             " } }";
+    private final String oneFailingTest = testImports +
+            "public class Fail {  \n" +
+            "@Test\n" +
+            " public void fail() { \n" +
+            "assertFalse(true);\n" +
+            " } }";
     HashMap<String, String> classes = new HashMap<>();
     HashMap<String, String> tests = new HashMap<>();
     HashMap<String, String> options = new HashMap<>();
@@ -64,12 +70,7 @@ public class LogikHandlerTests {
         classes.put("Code","Code");
         simpleHandler.setCode("public class Code { }");
         tests.put("Fail","Fail");
-        simpleHandler.setTest(testImports +
-                "public class Fail {  \n" +
-                "@Test\n" +
-                " public void fail() { \n" +
-                "assertFalse(true);\n" +
-                " } }");
+        simpleHandler.setTest(oneFailingTest);
         assertTrue(simpleHandler.isOneTestFailing());
     }
     @Test
@@ -97,6 +98,13 @@ public class LogikHandlerTests {
         simpleHandler.setTest(onePassingTest);
         assertEquals(simpleHandler.getFailingTests().length,0);
     }
-
+    @Test
+    public void test_getFailingTests_get_one() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Fail","Fail");
+        simpleHandler.setTest(oneFailingTest);
+        assertEquals(simpleHandler.getFailingTests().length,1);
+    }
    // @Test
 }
