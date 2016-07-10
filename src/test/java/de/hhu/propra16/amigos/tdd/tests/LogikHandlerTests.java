@@ -67,6 +67,19 @@ public class LogikHandlerTests {
         assertTrue(simpleHandler.isOneTestFailing());
     }
     @Test
+    public void test_isOneTestFailing_false() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Fail","Fail");
+        simpleHandler.setTest(testImports +
+                "public class Fail {  \n" +
+                "@Test\n" +
+                " public void fail() { \n" +
+                "assertTrue(true);\n" +
+                " } }");
+        assertFalse(simpleHandler.isOneTestFailing());
+    }
+    @Test
     public void test_tryCompileTest_good_test_pass() {
         classes.put("Code","Code");
         simpleHandler.setCode("public class Code { }");
