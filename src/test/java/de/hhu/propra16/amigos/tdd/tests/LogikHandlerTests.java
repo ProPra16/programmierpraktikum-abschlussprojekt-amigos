@@ -25,7 +25,7 @@ public class LogikHandlerTests {
     }
     @Test
     public void test_tryCompileCode_no_code() {
-        classes.put("test","fail");
+        classes.put("test","test");
         simpleHandler.setCode("");
         assertFalse(simpleHandler.tryCompileCode());
     }

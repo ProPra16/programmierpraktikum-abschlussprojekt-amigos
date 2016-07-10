@@ -245,7 +245,7 @@ public class LogikHandler {
     }
 
     public boolean tryCompileCode(){
-        if(aktuell.getCodeUnit() == null)
+        if(aktuell.getCodeUnit() == null || aktuell.getCode().isEmpty())
             return false;
 
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getCodeUnit()});
