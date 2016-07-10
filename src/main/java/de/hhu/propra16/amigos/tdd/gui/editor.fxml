@@ -13,6 +13,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.CheckBox?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.ExerciseController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
     <padding><Insets top="10" bottom="10" left="20" right="20"/></padding>
@@ -30,8 +32,8 @@
         <ImageView fx:id="cycleImageOverlay" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <Image url="@red.png" />
         </ImageView>
-        <VBox GridPane.columnIndex="3" spacing="10">
-            <Button id="controllButton" text="Compile and run"  onAction="#runCode">
+        <VBox GridPane.columnIndex="3" spacing="10" minWidth="160">
+            <Button styleClass="controlButton" text="Compile and run"  onAction="#runCode">
                 <graphic>
                     <ImageView>
                         <Image url="@play.png" />
@@ -41,14 +43,14 @@
                     <Tooltip text="Compile and Run your Code and Tests"/>
                 </tooltip>
             </Button>
-            <Button fx:id="nextPhaseButton" id="controllButton" text="Next Phase" disable="false">
+            <Button fx:id="nextPhaseButton" styleClass="controlButton" text="Next Phase" onAction="#nextPhase">
                 <graphic>
                     <ImageView>
                         <Image url="@next.png" />
                     </ImageView>
                 </graphic>
             </Button>
-            <Button fx:id="prevPhaseButton" id="controllButton" text="Prev Phase" disable="false">
+            <Button fx:id="prevPhaseButton" styleClass="controlButton" text="Prev Phase" onAction="#prevPhase">
                 <graphic>
                     <ImageView>
                         <Image url="@back.png" />
@@ -63,9 +65,19 @@
             <Label id="timerInfoLabel" text="${'Limit active:\n\nTime left\nfor this Phase\nbefore Reset:'}"/>
             <Label fx:id="timerLabel" id="timer" text="02:00" />
         </VBox>
-        <VBox fx:id="exerciseContainerContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
-            <Label fx:id="exerciseLabel" text="${'AufgabeXY\n\nAufgabenbeschreibung'}"/>
-            <Label id="step" fx:id="nextStep" text="${'Your next step:\nDo something...'}" />
+        <VBox fx:id="exerciseContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+            <Label fx:id="exerciseLabel" text="AufgabeXY" wrapText="true" />
+            <ScrollPane fitToWidth="true">
+                <content>
+                    <Label fx:id="exerciseDescription" id="exerciseDescription" wrapText="true" />
+                </content>
+            </ScrollPane>
+            <HBox spacing="15">
+                <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
+                <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
+                <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
+            </HBox>
+            <!--<Label id="step" fx:id="nextStep" text="" />-->
         </VBox>
     </GridPane>
 
@@ -85,7 +97,6 @@
             </Tab>
             <Tab text="Tests" fx:id="testTab">
                 <content>
-
                 </content>
             </Tab>
             <Tab text="Acceptance Tests" fx:id="atddTab">
@@ -93,9 +104,9 @@
                     <TDDCodeArea styleClass="editor" fx:id="atddArea" text="class ATDD {&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
-            <Tab text="Output">
+            <Tab text="Compile/Test Output" fx:id="outputTab">
                 <content>
-                    <TextArea styleClass="editor" fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false"/>
+                    <TextArea styleClass="editor" fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false" />
                 </content>
             </Tab>
         </tabs>

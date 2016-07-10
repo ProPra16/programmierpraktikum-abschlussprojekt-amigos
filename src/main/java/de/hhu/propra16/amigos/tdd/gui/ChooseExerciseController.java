@@ -1,7 +1,8 @@
 package de.hhu.propra16.amigos.tdd.gui;
 
+import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
-import de.hhu.propra16.amigos.tdd.xml.KatalogLeser;
+import de.hhu.propra16.amigos.tdd.xml.KatalogStore;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -37,7 +39,7 @@ public class ChooseExerciseController implements Initializable{
 
     private void tryLoadFile(File file, boolean silent){
         try{
-            Katalog loaded = KatalogLeser.lese(file);
+            Katalog loaded = KatalogStore.lese(file);
             if(loaded == null) throw new IllegalArgumentException();
 
             this.loadedCatalog = loaded;
@@ -54,6 +56,7 @@ public class ChooseExerciseController implements Initializable{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(("Error"));
                 alert.setContentText("Please choose a valid catalog file");
+                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                 alert.showAndWait();
             }
             this.catalogLoadedLabel.setText("Currently loaded: (none)");
@@ -88,15 +91,18 @@ public class ChooseExerciseController implements Initializable{
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("editor.fxml"));
             Parent root = loader.load();
-            ExerciseController exContr = (ExerciseController) loader.getController();
+            ExerciseController exContr = loader.getController();
             Stage currentStage = (Stage)this.listView.getScene().getWindow();
-            exContr.initialize(currentStage, this.loadedCatalog, null);//wait until Logic Team implements getting Exercise from Katalog
+            Exercise selectedExercise = loadedCatalog.getExercise(this.listView.getSelectionModel().getSelectedIndex());
+            exContr.initialize(currentStage, this.loadedCatalog, selectedExercise);
 
             currentStage.hide();
             stage.setOnCloseRequest(event -> {
                 currentStage.show();
                 currentStage.requestFocus();
             });
+
+            stage.setTitle(selectedExercise.getName() + " | TDD Trainer");
             stage.setMinHeight(600);
             stage.setMinWidth(500);
             stage.setScene(new Scene(root, 1050, 800));

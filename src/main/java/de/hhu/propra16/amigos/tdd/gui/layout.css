@@ -29,6 +29,14 @@
     -fx-text-fill:#e8e8e8;
     -fx-font-size: 11px;
 }
+.vbox{
+    -fx-border-color:#FFFFFF;
+    -fx-border-stroke:41px;
+}
+
+.scroll-pane, .scroll-pane > .viewport{
+    -fx-background-color: transparent;
+}
 
 /* start_mask */
 #brand{
@@ -80,14 +88,17 @@
     -fx-background-color:#e8e8e8;
     -fx-text-fill: #ba2e22;
 }
-#controllButton{
+.controlButton{
     -fx-padding: 0 0 0 0;
     -fx-background-color: #383838;
     -fx-background-radius:4;
 }
-#controllButton:hover{
+.controlButton:hover{
     -fx-background-color: #9ACD32;
 }
+.controlButton:disabled{
+    -fx-text-fill: #9b9b9b;
+    -fx-opacity: 0.6;
 }
 .hide-bar{
     fx-tab-max-height:0;
@@ -98,6 +109,17 @@
 }
 #step{
     -fx-text-fill:#F78181;
+}
+#exerciseDescription{
+    -fx-font-size: 10pt;
+    -fx-font-weight: normal;
+}
+.statuslabel{
+    -fx-font-size: 10pt;
+    -fx-text-fill: #00ac18;
+}
+.statuslabel.red {
+     -fx-text-fill: #ff0145;
 }
 
 /* richtextfx */
@@ -130,8 +152,4 @@
 .styled-text-area .text.semicolon{
     -fx-fill:#FFFFFF;
     -fx-font-weight: bold;
-}
-.vbox{
-    -fx-border-color:#FFFFFF;
-    -fx-border-stroke:41px;
 }
