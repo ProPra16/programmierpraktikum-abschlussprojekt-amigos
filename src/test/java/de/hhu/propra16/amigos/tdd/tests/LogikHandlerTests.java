@@ -55,6 +55,8 @@ public class LogikHandlerTests {
     }
     @Test
     public void test_isOneTestFailing_true() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
         tests.put("Fail","Fail");
         simpleHandler.setTest(testImports +
                 "public class Fail {  \n" +
