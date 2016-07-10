@@ -21,6 +21,7 @@ public class LogikHandler {
     String aTDDTest;
     CompilationUnit aTDDTestUnit;
 
+    // Man übergebe die entsprechende Exercise
     public LogikHandler(Exercise pAufgabe) {
 
         aufgabe = pAufgabe;
@@ -38,6 +39,7 @@ public class LogikHandler {
 
     }
 
+    // Der ale nächstes zu betrachtende Code wird als String übergeben
     public void setCode(String pCode) {
         try {
             aktuell.setCode((String) aufgabe.getClasses().keySet().toArray()[0], pCode);
@@ -48,6 +50,7 @@ public class LogikHandler {
         }
     }
 
+    // Der als nächstes zu betrachtende Test wird als String übergeben
     public void setTest(String pTest){
         try {
             aktuell.setTest((String) aufgabe.getTests().keySet().toArray()[0], pTest);
@@ -58,10 +61,12 @@ public class LogikHandler {
         }
     }
 
+    // Gibt den aktuellen TDD-Status zurück
     public TDDState getState(){
         return status;
     }
 
+    // versucht, in den angegebenen newState zu wechseln. Ist dies möglich, so wird gewechselt und true zurückgegeben, andernfalls false
     public boolean switchState(TDDState newState){
         if(!aTDD) {
 
@@ -150,10 +155,12 @@ public class LogikHandler {
         return false;
     }
 
+    // Gibt zurück, ob in Exercise aTDD enthalten ist
     public boolean isATDD(){
         return aTDD;
     }
 
+    // Prüft, ob abgespeicherter ATDD-Akzeptanztest funktioniert, also nicht fehlschlägt
     public boolean isATDDpassing(){
         if(aTDDTest == null || aTDDTestUnit == null || aktuell.getCodeUnit() == null)
             return false;
@@ -176,6 +183,7 @@ public class LogikHandler {
 
     }
 
+    // ATDD-Akzeptanztest kann mit dieser Methode abgespeichert werden
     public boolean setATDDTest(String pTest) {
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {new CompilationUnit(pTest, "ATDD", true), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
@@ -190,6 +198,7 @@ public class LogikHandler {
         return true;
     }
 
+    // Gibt zurück, ob man babySteps in der Exercise aktiviert hat
     public boolean isBabySteps(){
         return babySteps;
     }
@@ -208,10 +217,12 @@ public class LogikHandler {
         else return -2;
     }
 
+    //Gibt aktuellen Code zurück
     public CodeObject getAktuell() {
         return aktuell;
     }
 
+    // aktuell wird zum letzten gespeicherten CodeObjekt
     public CodeObject BabyStepBack(){
         aktuell.convertToValuesOf(lastPassed);
         return lastPassed;
@@ -272,7 +283,12 @@ public class LogikHandler {
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getTestUnit(), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
-        TestFailure[] fails = (TestFailure[]) compileTest.getTestResult().getTestFailures().toArray();
+        Object[] failObjects = compileTest.getTestResult().getTestFailures().toArray();
+        TestFailure[] fails = new TestFailure[failObjects.length];
+
+        for(int i = 0; i < fails.length; i++) {
+            fails[i] = (TestFailure) failObjects[i];
+        }
 
         String[] rueckgabe = new String[fails.length];
 
