@@ -106,5 +106,23 @@ public class LogikHandlerTests {
         simpleHandler.setTest(oneFailingTest);
         assertEquals(simpleHandler.getFailingTests().length,1);
     }
+    @Test
+    public void getFailingTests_get_two() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Fail","Fail");
+        simpleHandler.setTest(testImports +
+                "public class Fail {  \n" +
+                "@Test\n" +
+                " public void fail() { \n" +
+                "assertFalse(true);\n" +
+                " } \n" +
+                "@Test\n" +
+                "public void fail2() {\n" +
+                "assertTrue(false);\n " +
+                "}\n" +
+                "}\n");
+        assertEquals(simpleHandler.getFailingTests().length,2);
+    }
    // @Test
 }
