@@ -7,7 +7,7 @@ import vk.core.internal.InternalCompiler;
 
 import java.util.HashMap;
 
-public class LogikHandler implements LogikInterface{
+public class LogikHandler {
 
     Exercise aufgabe;
     TDDState status;
@@ -17,12 +17,6 @@ public class LogikHandler implements LogikInterface{
     CodeObject lastPassed; // in case of babysteps
 
     CodeObject aktuell;
-
-    /*String code;
-    CompilationUnit codeUnit;
-
-    String test;
-    CompilationUnit testUnit;*/
 
     String aTDDTest;
     CompilationUnit aTDDTestUnit;
@@ -36,18 +30,11 @@ public class LogikHandler implements LogikInterface{
 
         HashMap<String, String> options = aufgabe.getOptions();
 
-        if(options.keySet().contains("ATDD"))
-            aTDD = true;
-        else
-            aTDD = false;
-
-        if(options.keySet().contains("babysteps"))
-            babySteps = true;
-        else
-            babySteps = false;
+        aTDD = options.keySet().contains("ATDD");
+        babySteps = options.keySet().contains("babysteps");
 
         status = TDDState.WRITE_FAILING_TEST;
-
+        if(aTDD) status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
 
     }
 
@@ -294,5 +281,15 @@ public class LogikHandler implements LogikInterface{
         }
 
         return rueckgabe;
+    }
+
+    public TDDState getNextState() {
+        if(status == TDDState.WRITE_FAILING_TEST) return TDDState.MAKE_PASS_TEST;
+        if(status == TDDState.MAKE_PASS_TEST) return TDDState.REFACTOR;
+        if(status == TDDState.REFACTOR && aTDD) return TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
+        if(status == TDDState.REFACTOR && !aTDD) return TDDState.WRITE_FAILING_TEST;
+        if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) return TDDState.WRITE_FAILING_TEST;
+
+        return null;
     }
 }
