@@ -66,7 +66,9 @@ public class LogikHandlerTests {
     }
     @Test
     public void test_tryCompileTest_good_test_pass() {
-        tests.put("Good","Good");
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Good","passing");
         simpleHandler.setTest(testImports +
                 "public class Good { \n" +
                 "@Test\n" +
