@@ -72,8 +72,11 @@ public class LogikHandlerTests {
                 "@Test\n" +
                 "public void passing() { \n" +
                 " assertTrue(true);\n" +
-                " } }\n");
+                " } \n" +
+                "}\n");
+
         assertTrue(simpleHandler.tryCompileTest());
     }
+
    // @Test
 }
