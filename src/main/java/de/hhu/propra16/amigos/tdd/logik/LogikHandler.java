@@ -50,7 +50,7 @@ public class LogikHandler {
 
     public void setTest(String pTest){
         try {
-            aktuell.setCode((String) aufgabe.getTests().keySet().toArray()[0], pTest);
+            aktuell.setTest((String) aufgabe.getTests().keySet().toArray()[0], pTest);
         }
 
         catch(Exception e) {
