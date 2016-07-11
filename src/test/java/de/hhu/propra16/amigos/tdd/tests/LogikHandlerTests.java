@@ -137,4 +137,19 @@ public class LogikHandlerTests {
         simpleHandler.setTest(oneFailingTest);
         assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_fail() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertFalse(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+    }
 }
