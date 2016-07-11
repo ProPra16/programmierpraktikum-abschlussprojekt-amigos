@@ -4,16 +4,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.StartMaskController" xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
     <stylesheets>
         <URL value="@layout.css" />
     </stylesheets>
-    <Label id="brand" text="${'Test\nDriven\nDevelopment\nTrainer'}"
-           GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
         <GridPane.margin>
             <Insets top="30" />
         </GridPane.margin>
-    </Label>
+        <HBox><Label styleClass="brand,mark" text="T" /><Label styleClass="brand" text="est"/></HBox>
+        <HBox><Label styleClass="brand,mark" text="D" /><Label styleClass="brand" text="riven" /></HBox>
+        <HBox><Label styleClass="brand,mark" text="D" /><Label styleClass="brand" text="evelopment" /></HBox>
+        <Label styleClass="brand" text="Trainer" />
+
+    </VBox>
     <Button id="start" text="Start" onAction="#manageStart"
             GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
     <Label id="author" text="by Amigos"
