@@ -328,7 +328,7 @@ public class ExerciseController {
             this.applyStateToGUI();
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "You can't move on right now", ButtonType.CLOSE);
-            alert.setContentText("Sorry, you cant move on to the next phase. Please fulfill your task before! Check the Output for more Infos.");
+            alert.setContentText("Sorry, you cant move on to the next phase. Please fulfill your task before! Check the Output for more details.");
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         }
