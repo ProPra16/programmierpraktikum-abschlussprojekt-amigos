@@ -39,31 +39,31 @@ public class LogikHandlerTests {
     public void tryCompileCode_no_code() {
         classes.put("test","test");
         simpleHandler.setCode("");
-        assertFalse(simpleHandler.tryCompileCode());
+        assertFalse(simpleHandler.tryCompileCode().toString().isEmpty());
     }
     @Test
     public void tryCompileCode_bad_code() {
         classes.put("test","fail");
         simpleHandler.setCode("fail");
-        assertFalse(simpleHandler.tryCompileCode());
+        assertFalse(simpleHandler.tryCompileCode().toString().isEmpty());
      }
     @Test
     public void tryCompileCode_good_code() {
         classes.put("Good","Good");
         simpleHandler.setCode("public class Good { }");
-        assertTrue(simpleHandler.tryCompileCode());
+        assertTrue(simpleHandler.tryCompileCode() == null);
     }
     @Test
     public void tryCompileTest_no_code() {
         tests.put("test","fail");
         simpleHandler.setTest("");
-        assertFalse(simpleHandler.tryCompileTest());
+        assertFalse(simpleHandler.tryCompileTest().toString().isEmpty());
     }
     @Test
     public void tryCompileTest_bad_test() {
         tests.put("test","fail");
         simpleHandler.setTest("fail");
-        assertFalse(simpleHandler.tryCompileTest());
+        assertFalse(simpleHandler.tryCompileTest().toString().isEmpty());
     }
     @Test
     public void isOneTestFailing_true() {
@@ -88,7 +88,7 @@ public class LogikHandlerTests {
         tests.put("Good","passing");
         simpleHandler.setTest(onePassingTest);
 
-        assertTrue(simpleHandler.tryCompileTest());
+        assertTrue(simpleHandler.tryCompileTest() == null);
     }
     @Test
     public void getFailingTests_get_none() {
@@ -124,5 +124,8 @@ public class LogikHandlerTests {
                 "}\n");
         assertEquals(simpleHandler.getFailingTests().length,2);
     }
-   // @Test
+   @Test
+   public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
+
+   }
 }
