@@ -1,6 +1,7 @@
 package de.hhu.propra16.amigos.tdd.tests;
 
 import de.hhu.propra16.amigos.tdd.logik.LogikHandler;
+import de.hhu.propra16.amigos.tdd.logik.TDDState;
 import de.hhu.propra16.amigos.tdd.xml.*;
 import static org.junit.Assert.*;
 
@@ -124,8 +125,12 @@ public class LogikHandlerTests {
                 "}\n");
         assertEquals(simpleHandler.getFailingTests().length,2);
     }
-   @Test
-   public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
-
-   }
+    @Test
+    public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Good","passing");
+        simpleHandler.setTest(onePassingTest);
+        assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
 }
