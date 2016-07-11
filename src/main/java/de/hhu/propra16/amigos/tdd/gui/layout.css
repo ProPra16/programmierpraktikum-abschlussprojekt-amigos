@@ -27,7 +27,7 @@
 }
 .text-area{
     -fx-text-fill:#e8e8e8;
-    -fx-font-size: 11px;
+    -fx-font-size: 14px;
 }
 .vbox{
     -fx-border-color:#FFFFFF;
@@ -45,7 +45,7 @@
     -fx-font-weight: normal;
 }
 .brand.mark{
-    -fx-text-fill: #9ACD32;;
+    -fx-font-weight: bold;
 }
 
 #author{
@@ -90,6 +90,8 @@
     -fx-border-width: 1px;
     -fx-border-style: solid;
     -fx-border-color: #e8e8e8;
+    -fx-font-size:12pt;
+
 }
 
 #timer{
@@ -125,11 +127,13 @@
 }
 .statuslabel{
     -fx-font-size: 14pt;
-    -fx-text-fill: #00ac18;
+    -fx-text-fill: #00F923;
 }
 .statuslabel.red {
      -fx-text-fill: #ff2b14;
 }
+
+
 
 /* richtextfx */
 .styled-text-area .text{
