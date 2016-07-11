@@ -31,6 +31,12 @@ public class LogikHandlerTests {
     private Exercise emptyExercise;
     private LogikHandler simpleHandler;
 
+    private void setupGoodBase() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Good","passing");
+    }
+
     @Before
     public void initialise() {
         emptyExercise = new Exercise("name", "desc", classes, tests, options);
@@ -76,26 +82,20 @@ public class LogikHandlerTests {
     }
     @Test
     public void isOneTestFailing_false() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
     @Test
     public void tryCompileTest_good_test_pass() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
 
         assertTrue(simpleHandler.tryCompileTest() == null);
     }
     @Test
     public void getFailingTests_get_none() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertEquals(simpleHandler.getFailingTests().length,0);
     }
@@ -127,9 +127,7 @@ public class LogikHandlerTests {
     }
     @Test
     public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
