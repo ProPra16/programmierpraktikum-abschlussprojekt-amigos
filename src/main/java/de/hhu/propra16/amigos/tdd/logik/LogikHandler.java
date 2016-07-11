@@ -2,6 +2,7 @@ package de.hhu.propra16.amigos.tdd.logik;
 
 import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import vk.core.api.CompilationUnit;
+import vk.core.api.CompileError;
 import vk.core.api.TestFailure;
 import vk.core.internal.InternalCompiler;
 
@@ -66,7 +67,7 @@ public class LogikHandler {
         if(!aTDD) {
 
             if (status == TDDState.REFACTOR) {
-                if (newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() && tryCompileCode() && !isOneTestFailing()) {
+                if (newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() == null && tryCompileCode() == null && !isOneTestFailing()) {
                     lastPassed.convertToValuesOf(aktuell);
                     status = newState;
                     return true;
@@ -91,7 +92,7 @@ public class LogikHandler {
                     return true;
                 }
 
-                if (newState == TDDState.REFACTOR && tryCompileCode() && tryCompileTest() && !isOneTestFailing()) {
+                if (newState == TDDState.REFACTOR && tryCompileCode() == null && tryCompileTest() == null && !isOneTestFailing()) {
                     lastPassed.convertToValuesOf(aktuell);
                     status = newState;
                     return true;
@@ -158,7 +159,7 @@ public class LogikHandler {
         if(aTDDTest == null || aTDDTestUnit == null || aktuell.getCodeUnit() == null)
             return false;
 
-        if(!tryCompileCode())
+        if(!(tryCompileCode() == null))
             return false;
 
         InternalCompiler compile = new InternalCompiler(new CompilationUnit[] {aTDDTestUnit, aktuell.getCodeUnit()});
@@ -176,18 +177,27 @@ public class LogikHandler {
 
     }
 
-    public boolean setATDDTest(String pTest) {
-        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {new CompilationUnit(pTest, "ATDD", true), aktuell.getCodeUnit()});
+    public String[] setATDDTest(String pTest) {
+        CompilationUnit testATDD = new CompilationUnit(pTest, "ATDD", true);
+
+        InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testATDD, aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
-        if(compileTest.getCompilerResult().hasCompileErrors()) {
-            return false;
+        if(!compileTest.getCompilerResult().hasCompileErrors()) {
+            aTDDTest = pTest;
+            aTDDTestUnit = new CompilationUnit(aTDDTest, "ATDD", true);
+
+            return null;
         }
 
-        aTDDTest = pTest;
-        aTDDTestUnit = new CompilationUnit(aTDDTest, "ATDD", true);
+        Object[] errorObjects = compileTest.getCompilerResult().getCompilerErrorsForCompilationUnit(testATDD).toArray();
+        String[] errors = new String[errorObjects.length];
 
-        return true;
+        for(int i = 0; i < errors.length; i++) {
+            errors[i] = ((CompileError) errorObjects[i]).toString();
+        }
+
+        return errors;
     }
 
     public boolean isBabySteps(){
@@ -217,35 +227,49 @@ public class LogikHandler {
         return lastPassed;
     }
 
-    public boolean tryCompileTest(){
+    public String[] tryCompileTest(){
         if(aktuell.getTestUnit() == null || aktuell.getCodeUnit() == null)
-            return false;
+            return new String[] {"nothing to compile"};
 
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getTestUnit(), aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
-        if(compileTest.getCompilerResult().hasCompileErrors()) {
-            return false;
+        if(!compileTest.getCompilerResult().hasCompileErrors()) {
+            return null;
 
         }
 
-        return true;
+        Object[] errorObjects = compileTest.getCompilerResult().getCompilerErrorsForCompilationUnit(aktuell.getTestUnit()).toArray();
+        String[] errors = new String[errorObjects.length];
+
+        for(int i = 0; i < errors.length; i++) {
+            errors[i] = ((CompileError) errorObjects[i]).toString();
+        }
+
+        return errors;  // Note that this will only return the messages of the compilation of the test
 
     }
 
-    public boolean tryCompileCode(){
+    public String[] tryCompileCode(){
         if(aktuell.getCodeUnit() == null || aktuell.getCode().isEmpty())
-            return false;
+            return new String[] {"nothing to compile"};
 
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
-        if(compileTest.getCompilerResult().hasCompileErrors()) {
-            return false;
+        if(!compileTest.getCompilerResult().hasCompileErrors()) {
+            return null;
 
         }
 
-        return true;
+        Object[] errorObjects = compileTest.getCompilerResult().getCompilerErrorsForCompilationUnit(aktuell.getCodeUnit()).toArray();
+        String[] errors = new String[errorObjects.length];
+
+        for(int i = 0; i < errors.length; i++) {
+            errors[i] = ((CompileError) errorObjects[i]).toString();
+        }
+
+        return errors;
 
     }
 
