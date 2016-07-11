@@ -131,4 +131,10 @@ public class LogikHandlerTests {
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
+    @Test
+    public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
 }
