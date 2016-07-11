@@ -18,6 +18,9 @@
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="programmierpraktikum-abschlussprojekt-amigos_main" target="1.8" />
+      <module name="programmierpraktikum-abschlussprojekt-amigos_test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-
