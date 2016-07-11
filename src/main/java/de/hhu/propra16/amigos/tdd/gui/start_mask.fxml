@@ -17,7 +17,7 @@
         <HBox><Label styleClass="brand,mark" text="T" /><Label styleClass="brand" text="est"/></HBox>
         <HBox><Label styleClass="brand,mark" text="D" /><Label styleClass="brand" text="riven" /></HBox>
         <HBox><Label styleClass="brand,mark" text="D" /><Label styleClass="brand" text="evelopment" /></HBox>
-        <Label styleClass="brand" text="Trainer" />
+        <HBox><Label styleClass="brand,mark" text="T" /><Label styleClass="brand" text="rainer" /></HBox>
 
     </VBox>
     <Button id="start" text="Start" onAction="#manageStart"
