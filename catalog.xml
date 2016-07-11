@@ -2,7 +2,94 @@
     <exercise>
 
         <name>
-            Name der Aufgabe
+            Currency Converter
+        </name>
+
+        <description>
+            Your Code should change Euro into Japanese Yen.
+        </description>
+
+        <classes>
+
+            <class name="CurrencyConverter">
+public class CurrencyConverter {
+
+}
+            </class>
+
+            <tests>
+
+                <test name="CurrencyConverterTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class CurrencyConverterTest {
+    @Test
+    public void testSomething() {
+
+    }
+}
+                </test>
+
+            </tests>
+
+        </classes>
+
+        <options>
+
+            <option name="Option Name" value="Wert gegebenfalls" />
+
+        </options>
+
+    </exercise>
+    <exercise>
+
+        <name>
+            Customer
+        </name>
+
+        <description>
+            Imagine you are the owner from a little store, but the Problem is that you are forgetful. So you want to make a program where you can save the name from your Customers.
+        </description>
+
+        <classes>
+
+            <class name="Customer">
+public class Customer {
+
+}
+            </class>
+
+            <tests>
+
+                <test name="CustomerTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class CustomerTest {
+
+    @Test
+    public void testSomething {
+
+    }
+}
+                </test>
+
+            </tests>
+
+        </classes>
+
+        <options>
+
+            <option name="Option Name" value="Wert gegebenfalls" />
+
+        </options>
+
+    </exercise>
+    <exercise>
+
+        <name>
+            Lorem Ipsum
         </name>
 
         <description>
@@ -59,23 +146,34 @@ public class TDDTest{
     <exercise>
 
         <name>
-            Testaufabe 2
+            Roman Numbers
         </name>
 
         <description>
-            Aufgabenstellung
+            Your Code should convert arabic numbers into roman numbers.
         </description>
 
         <classes>
 
-            <class name="Name der Klasse">
-                Die Klasse als einfacher Text
+            <class name="RomanNumberConverter">
+public class RomanNumberConverter {
+
+}
             </class>
 
             <tests>
 
-                <test name="name des tests">
-                    Test
+                <test name="RomanNumberConverterTest">
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class RomanNumbersTest {
+
+    @Test
+    public void testSomething() {
+
+    }
+}
                 </test>
 
             </tests>
