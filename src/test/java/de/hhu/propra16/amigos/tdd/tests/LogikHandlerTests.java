@@ -138,7 +138,7 @@ public class LogikHandlerTests {
         assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
     @Test
-    public void switchState_MAKE_PASS_TEST_to_REFACTOR_fail() {
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_fails() {
         setupGoodBase();
         simpleHandler.setTest(oneFailingTest);
         simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
@@ -151,5 +151,32 @@ public class LogikHandlerTests {
         simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
         simpleHandler.setTest(onePassingTest);
         assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_WRITE_FAILING_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_fails_from_test() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        simpleHandler.setTest(oneFailingTest);
+        assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_fails_from_code() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        simpleHandler.setCode("public class Code {");
+        assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
 }
