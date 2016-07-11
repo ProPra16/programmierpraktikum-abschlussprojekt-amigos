@@ -85,6 +85,13 @@
     -fx-text-fill:#C8FE2E;
     -fx-font-size: 16px;
 }
+
+#outputTabContainer{
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #e8e8e8;
+}
+
 #timer{
     -fx-font-size:18pt;
     -fx-background-color:#e8e8e8;
@@ -117,11 +124,11 @@
     -fx-font-weight: normal;
 }
 .statuslabel{
-    -fx-font-size: 10pt;
+    -fx-font-size: 14pt;
     -fx-text-fill: #00ac18;
 }
 .statuslabel.red {
-     -fx-text-fill: #ff0145;
+     -fx-text-fill: #ff2b14;
 }
 
 /* richtextfx */

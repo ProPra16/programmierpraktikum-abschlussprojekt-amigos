@@ -6,20 +6,23 @@ import de.hhu.propra16.amigos.tdd.logik.LogikHandler;
 import de.hhu.propra16.amigos.tdd.logik.TDDState;
 import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
-import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,7 +51,7 @@ public class ExerciseController {
     @FXML
     private Button nextPhaseButton, prevPhaseButton;
     @FXML
-    private VBox babyStepContainer, exerciseContainer;
+    private VBox babyStepContainer, exerciseContainer, outputTabContainer;
 
     private Integer timerSecondsLeft;
     private Integer babyStepsTime = 120;
@@ -76,7 +79,7 @@ public class ExerciseController {
         applyStateToGUI();
 
         if(!this.logikHandler.isATDD()){
-            atddStatusLabel.setVisible(false);
+            outputTabContainer.getChildren().remove(atddStatusLabel);
         }
 
         Image phaseImage = getImageOfPhase(this.logikHandler.getState());
@@ -90,31 +93,45 @@ public class ExerciseController {
 
     }
 
-    public void applyStateToGUI(){
+    private void applyStateToGUI(){
         switch(this.logikHandler.getState()){
             case MAKE_PASS_TEST:
                 codeArea.setDisable(false);
                 testArea.setDisable(true);
                 atddArea.setDisable(true);
+                nextStep.setText("Current task: Change your code minimally to make the test pass");
                 break;
             case WRITE_FAILING_TEST:
                 codeArea.setDisable(true);
                 testArea.setDisable(false);
                 atddArea.setDisable(true);
+                nextStep.setText("Current task: Write a failing or not compiling test");
                 break;
             case WRITE_FAILING_ACCEPTANCE_TEST:
                 codeArea.setDisable(true);
                 testArea.setDisable(true);
                 atddArea.setDisable(false);
+                nextStep.setText("Current task: Write an failing or not compiling acceptance test");
             case REFACTOR:
                 codeArea.setDisable(false);
                 testArea.setDisable(false);
                 atddArea.setDisable(true);
+                nextStep.setText("Current task: Refactor the code and/or tests if you want");
                 break;
         }
 
-        boolean shouldDisablePrev = this.logikHandler.getState() != TDDState.MAKE_PASS_TEST && !this.logikHandler.isATDD();
-        this.prevPhaseButton.setDisable(shouldDisablePrev);
+        FadeTransition ft = new FadeTransition(Duration.millis(800), nextStep);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+
+        this.prevPhaseButton.setDisable(this.logikHandler.getState() != TDDState.MAKE_PASS_TEST );
+        if(this.logikHandler.getState() != TDDState.MAKE_PASS_TEST  && this.logikHandler.isATDD()){
+            this.prevPhaseButton.setDisable(false);
+            this.prevPhaseButton.setText("Change Accept Test");
+        }else{
+            this.prevPhaseButton.setText("Prev Phase");
+        }
 
         if(this.babyStepsTimer != null){
             babyStepsTimer.cancel();
@@ -128,6 +145,10 @@ public class ExerciseController {
     }
 
     public void runCode(){
+        runAndUpdateGUI(true);
+    }
+
+    private void runAndUpdateGUI(boolean switchAlwaysToOutputTab){
         this.logikHandler.setCode(this.codeArea.getText());
         this.logikHandler.setTest(this.testArea.getText());
         if(this.logikHandler.isATDD()){
@@ -141,9 +162,14 @@ public class ExerciseController {
             this.compileStatusLabel.setText("Code doesn't compile");
             this.compileStatusLabel.getStyleClass().add("red");
         }
-        String[] failingTests = this.logikHandler.getFailingTests();
+        String[] failingTests = null;
+        try{
+            failingTests = this.logikHandler.getFailingTests();
+        }catch(Exception ex){}
+
         if(this.logikHandler.tryCompileTest()){
             if(failingTests.length == 0 ){
+                if(switchAlwaysToOutputTab) this.codeTabPane.getSelectionModel().select(outputTab);
                 this.testStatusLabel.setText("Tests passing");
                 this.testStatusLabel.getStyleClass().remove("red");
             }else{
@@ -152,19 +178,45 @@ public class ExerciseController {
                 this.testStatusLabel.getStyleClass().add("red");
             }
         }else{
+            this.codeTabPane.getSelectionModel().select(outputTab);
             this.testStatusLabel.setText("Tests dont compile");
             this.testStatusLabel.getStyleClass().add("red");
         }
+        doOutputScaleAnimation();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if(failingTests != null){
+            for(String k : failingTests){
+                stringBuilder.append(k);
+                stringBuilder.append("\n");
+            }
+        }
+        compilerArea.setText(stringBuilder.toString());
 
         if(this.logikHandler.isATDD()){
             if(this.logikHandler.isATDDpassing()){
-                this.atddStatusLabel.setText("Accep. Test not failing");
+                this.atddStatusLabel.setText("Accept. Test not failing");
                 this.atddStatusLabel.getStyleClass().remove("red");
             }else{
-                this.atddStatusLabel.setText("Accep. Test is failing");
+                this.atddStatusLabel.setText("Accept. Test is failing");
                 this.atddStatusLabel.getStyleClass().add("red");
             }
         }
+    }
+
+    private void doOutputScaleAnimation(){
+        ParallelTransition pt = new ParallelTransition();
+        for(Node c : outputTabContainer.getChildren()){
+            ScaleTransition scale = new ScaleTransition(Duration.millis(250), c);
+            scale.setFromX(1);
+            scale.setToX(1.1);
+            scale.setFromY(1);
+            scale.setToY(1.1);
+            scale.setAutoReverse(true);
+            scale.setCycleCount(2);
+            pt.getChildren().add(scale);
+        }
+        pt.play();
 
     }
 
@@ -270,7 +322,7 @@ public class ExerciseController {
     }
 
     public void nextPhase(){
-        runCode();
+        runAndUpdateGUI(false);
         if(this.logikHandler.switchState(this.logikHandler.getNextState())){
             this.switchStateAnimation(this.logikHandler.getState());
             this.applyStateToGUI();

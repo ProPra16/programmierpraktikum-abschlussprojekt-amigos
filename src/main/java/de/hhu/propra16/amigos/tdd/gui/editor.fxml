@@ -72,12 +72,7 @@
                     <Label fx:id="exerciseDescription" id="exerciseDescription" wrapText="true" />
                 </content>
             </ScrollPane>
-            <HBox spacing="15">
-                <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
-                <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
-                <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
-            </HBox>
-            <!--<Label id="step" fx:id="nextStep" text="" />-->
+            <Label id="step" fx:id="nextStep" text="" />
         </VBox>
     </GridPane>
 
@@ -104,9 +99,17 @@
                     <TDDCodeArea styleClass="editor" fx:id="atddArea" text="class ATDD {&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
-            <Tab text="Compile/Test Output" fx:id="outputTab">
+            <Tab text="Compile/Test Output" fx:id="outputTab" >
                 <content>
-                    <TextArea styleClass="editor" fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false" />
+                    <VBox spacing="15" fx:id="outputTabContainer" id="outputTabContainer">
+                        <padding>
+                            <Insets top="20" bottom="20" left="15" right="15" />
+                        </padding>
+                        <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
+                        <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
+                        <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
+                        <TextArea fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false" />
+                    </VBox>
                 </content>
             </Tab>
         </tabs>
