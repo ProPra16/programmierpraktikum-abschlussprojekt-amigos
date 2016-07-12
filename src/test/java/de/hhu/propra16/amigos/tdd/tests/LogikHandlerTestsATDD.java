@@ -5,6 +5,7 @@ import de.hhu.propra16.amigos.tdd.logik.TDDState;
 import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 
@@ -43,5 +44,23 @@ public class LogikHandlerTestsATDD {
     @Test
     public void switchState_getState_ATDD_pass() {
         assertTrue(simpleHandler.getState() == TDDState.WRITE_FAILING_ACCEPTANCE_TEST);
+    }
+    @Test
+    public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_REFACTOR_pass() {
+        assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_WRITE_FAILING_TEST_pass() {
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_WRITE_FAILING_TEST_fails() {
+        simpleHandler.setATDDTest(testImports +
+                "public class ATDD {  \n" +
+                "@Test\n" +
+                " public void passing() { \n" +
+                "assertTrue(true);\n" +
+                " } }");
+        assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
 }
