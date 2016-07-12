@@ -179,4 +179,13 @@ public class LogikHandlerTests {
         simpleHandler.setCode("public class Code {");
         assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
 }
