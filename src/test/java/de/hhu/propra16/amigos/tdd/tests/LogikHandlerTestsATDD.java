@@ -78,6 +78,12 @@ public class LogikHandlerTestsATDD {
     @Test
     public void switchState_MAKE_PASS_TEST_to_WRITE_FAILING_TEST_pass() {
         simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
         assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_fails() {
+     //   simpleHandler.setATDDTest(failingATDDTest);
+     //   assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
 }
