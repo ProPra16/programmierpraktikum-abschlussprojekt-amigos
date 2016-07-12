@@ -69,7 +69,7 @@ public class LogikHandler {
             return true;
         }
 
-        if(newState != getNextState() || newState != TDDState.WRITE_FAILING_TEST)
+        if(newState != getNextState() && newState != TDDState.WRITE_FAILING_TEST)
             return false;
 
         if(newState == TDDState.WRITE_FAILING_TEST) {
