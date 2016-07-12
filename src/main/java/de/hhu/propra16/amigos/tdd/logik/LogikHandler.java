@@ -64,91 +64,32 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
-        if(!aTDD) {
-
-            if (status == TDDState.REFACTOR) {
-                if (newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() == null && tryCompileCode() == null && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if (status == TDDState.WRITE_FAILING_TEST) {
-                if (newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
-                    status = newState;
-                    return true;
-                }
-
-                if (newState == TDDState.REFACTOR) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if (status == TDDState.MAKE_PASS_TEST) {
-                if (newState == TDDState.WRITE_FAILING_TEST) {
-                    status = newState;
-                    return true;
-                }
-
-                if (newState == TDDState.REFACTOR && tryCompileCode() == null && tryCompileTest() == null && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
+        if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
+            status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
+            return true;
         }
 
-        else {
-            if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
-                if(newState == TDDState.REFACTOR) {
-                    status = newState;
-                    return true;
-                }
+        if(newState != getNextState() || newState != TDDState.WRITE_FAILING_TEST)
+            return false;
 
-                if(newState == TDDState.WRITE_FAILING_TEST && !isATDDpassing()) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.WRITE_FAILING_TEST) {
-                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
-                    status = newState;
-                    return true;
-                }
-                if(newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.MAKE_PASS_TEST) {
-                if(newState == TDDState.WRITE_FAILING_TEST) {
-                    status = newState;
-                    return true;
-                }
-
-                if(newState == TDDState.REFACTOR && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.REFACTOR) {
-                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-
+        if(newState == TDDState.WRITE_FAILING_TEST) {
+            status = TDDState.WRITE_FAILING_TEST;
+            return true;
         }
 
-        return false;
+        // From now on, a state can only be a next state as given by getNextState()
+
+        if(newState == TDDState.REFACTOR) {
+            if(tryCompileTest() == null && tryCompileCode() == null) {
+                status = newState;
+                return true;
+            }
+
+            else return false;
+        }
+
+        status = newState;
+        return true;
     }
 
     public boolean isATDD(){
