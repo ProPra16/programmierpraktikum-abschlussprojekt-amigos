@@ -74,6 +74,7 @@ public class LogikHandler {
             return false;
 
         if(newState == TDDState.WRITE_FAILING_TEST) {
+            if(!isOneTestFailing()) return false;
             if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_TEST;
             return true;
