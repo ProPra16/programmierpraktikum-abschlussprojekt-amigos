@@ -65,6 +65,7 @@ public class LogikHandler {
 
     public boolean switchState(TDDState newState){
         if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
+            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
             return true;
         }
@@ -73,6 +74,7 @@ public class LogikHandler {
             return false;
 
         if(newState == TDDState.WRITE_FAILING_TEST) {
+            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_TEST;
             return true;
         }
