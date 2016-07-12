@@ -108,7 +108,7 @@
                         <Label fx:id="testStatusLabel" styleClass="statuslabel,red" text="Tests not run so far" wrapText="true" />
                         <Label fx:id="compileStatusLabel" styleClass="statuslabel,red" text="Code not compiled so far" wrapText="true" />
                         <Label fx:id="atddStatusLabel" styleClass="statuslabel,red" text="Accept. Test not run so far" wrapText="true" />
-                        <TextArea fx:id="compilerArea" text="Compiler/Test Output" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" editable="false" />
+                        <TextArea fx:id="compilerArea" text="Compiler/Test Output" VBox.vgrow="ALWAYS" editable="false" />
                     </VBox>
                 </content>
             </Tab>
