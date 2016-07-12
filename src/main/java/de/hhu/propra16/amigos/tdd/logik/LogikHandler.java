@@ -64,7 +64,7 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
-        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing())) {
+        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) || (status == TDDState.REFACTOR && newState == TDDState.WRITE_FAILING_TEST)) {
             return false;
         }
 
