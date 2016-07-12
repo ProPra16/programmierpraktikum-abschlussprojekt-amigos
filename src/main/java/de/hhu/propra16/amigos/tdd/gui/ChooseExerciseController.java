@@ -94,7 +94,7 @@ public class ChooseExerciseController implements Initializable{
             ExerciseController exContr = loader.getController();
             Stage currentStage = (Stage)this.listView.getScene().getWindow();
             Exercise selectedExercise = loadedCatalog.getExercise(this.listView.getSelectionModel().getSelectedIndex());
-            exContr.initialize(currentStage, this.loadedCatalog, selectedExercise);
+            exContr.initialize(this.loadedCatalog, selectedExercise);
 
             currentStage.hide();
             stage.setOnCloseRequest(event -> {

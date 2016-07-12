@@ -11,26 +11,24 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ExerciseController {
     private Exercise exercise;
     private Katalog katalog;
-    private Stage selectExerciseStage;
     private LogikHandler logikHandler;
+    private Integer timerSecondsLeft;
+    private Integer babyStepsTime = 120;
+    private Timer babyStepsTimer;
 
     @FXML
     private Label compileStatusLabel, testStatusLabel, atddStatusLabel, timerLabel, exerciseLabel, exerciseDescription, nextStep;
@@ -49,17 +47,11 @@ public class ExerciseController {
     @FXML
     private GridPane menuPane, codeTestGridPane;
     @FXML
-    private Button nextPhaseButton, prevPhaseButton;
+    private Button prevPhaseButton;
     @FXML
     private VBox babyStepContainer, exerciseContainer, outputTabContainer;
 
-    private Integer timerSecondsLeft;
-    private Integer babyStepsTime = 120;
-    private Timer babyStepsTimer;
-
-
-    public void initialize(Stage selectExerciseStage, Katalog loadedCatalog, Exercise selectedExercise){
-        this.selectExerciseStage = selectExerciseStage;
+    public void initialize(Katalog loadedCatalog, Exercise selectedExercise){
         this.katalog = loadedCatalog;
         this.exercise = selectedExercise;
         this.codeArea.setText(this.exercise.getClasses().entrySet().iterator().next().getValue());
@@ -68,16 +60,13 @@ public class ExerciseController {
         this.exerciseDescription.setText(this.exercise.getDescription());
         this.logikHandler = new LogikHandler(exercise);
 
-
         if(this.logikHandler.isBabySteps()){
             this.babyStepsTime = this.logikHandler.babyStepsTime() * 60;
         }else{
             menuPane.getChildren().remove(this.babyStepContainer);
         }
-
         hideUnusedTabs();
         applyStateToGUI();
-
         if(!this.logikHandler.isATDD()){
             outputTabContainer.getChildren().remove(atddStatusLabel);
         }
@@ -90,7 +79,6 @@ public class ExerciseController {
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
-
     }
 
     private void applyStateToGUI(){
@@ -99,7 +87,7 @@ public class ExerciseController {
                 codeArea.setDisable(false);
                 testArea.setDisable(true);
                 atddArea.setDisable(true);
-                nextStep.setText("Current task: Change your code minimally to make the test pass");
+                nextStep.setText("Current task: Write minimal code to make the test pass");
                 break;
             case WRITE_FAILING_TEST:
                 codeArea.setDisable(true);
@@ -132,7 +120,6 @@ public class ExerciseController {
         }else{
             this.prevPhaseButton.setText("Prev Phase");
         }
-
         if(this.babyStepsTimer != null){
             babyStepsTimer.cancel();
         }
@@ -149,69 +136,103 @@ public class ExerciseController {
     }
 
     private void runAndUpdateGUI(boolean switchAlwaysToOutputTab){
+        StringBuilder output = new StringBuilder();
         this.logikHandler.setCode(this.codeArea.getText());
         this.logikHandler.setTest(this.testArea.getText());
-        if(this.logikHandler.isATDD()){
-            this.logikHandler.setATDDTest(this.atddArea.getText());
-        }
 
-        if(this.logikHandler.tryCompileCode()){
+        updateGuiForCode(output);
+        updateGuiForTests(output, switchAlwaysToOutputTab);
+        if(this.logikHandler.isATDD()){
+            updateGuiForAtdd(output);
+        }
+        String outputString = output.toString();
+        if(outputString.equals("")) outputString = "Nothing here, all fine :)";
+        compilerArea.setText(outputString);
+        doOutputScaleAnimation();
+    }
+
+    private void updateGuiForAtdd(StringBuilder output) {
+        String[] compileResult = this.logikHandler.setATDDTest(this.atddArea.getText());
+        if(this.logikHandler.isATDDpassing()){
+            this.atddStatusLabel.setText("Accept. Test not failing");
+            this.atddStatusLabel.getStyleClass().remove("red");
+        }else{
+            this.atddStatusLabel.setText("Accept. Test is failing");
+            if(!this.atddStatusLabel.getStyleClass().contains("red")) this.atddStatusLabel.getStyleClass().add("red");
+        }
+        output.append("Acceptance Test error(s):\n");
+        for(String e : compileResult){
+            output.append(e);
+            output.append("\n");
+        }
+        output.append("\n\n\n");
+    }
+
+    private void updateGuiForCode(StringBuilder output) {
+        String[] compileResult = this.logikHandler.tryCompileCode();
+        if(compileResult == null){
             this.compileStatusLabel.setText("Code compiles");
             this.compileStatusLabel.getStyleClass().remove("red");
         }else{
             this.compileStatusLabel.setText("Code doesn't compile");
             this.compileStatusLabel.getStyleClass().add("red");
+            output.append("Code compile error(s):\n");
+            for(String e : compileResult){
+                output.append(e);
+                output.append("\n");
+            }
+            output.append("\n\n\n");
         }
-        String[] failingTests = null;
-        try{
-            failingTests = this.logikHandler.getFailingTests();
-        }catch(Exception ex){}
+    }
 
-        if(this.logikHandler.tryCompileTest()){
-            if(failingTests.length == 0 ){
-                if(switchAlwaysToOutputTab) this.codeTabPane.getSelectionModel().select(outputTab);
+    private void updateGuiForTests(StringBuilder output, boolean switchAlwaysToOutputTab) {
+        String[] failingTests = null;
+        try {
+            failingTests = this.logikHandler.getFailingTests();
+        } catch (Exception ex) {
+        }
+        if (failingTests != null && failingTests.length != 0) {
+            output.append("Failing Tests:\n");
+            for (String k : failingTests) {
+                output.append(k);
+                output.append("\n");
+            }
+            output.append("\n\n\n");
+        }
+
+        String[] testCompileResult = this.logikHandler.tryCompileTest();
+        if (testCompileResult == null) {
+            if (failingTests.length == 0) {
+                if (switchAlwaysToOutputTab) this.codeTabPane.getSelectionModel().select(outputTab);
                 this.testStatusLabel.setText("Tests passing");
                 this.testStatusLabel.getStyleClass().remove("red");
-            }else{
+            } else {
                 this.codeTabPane.getSelectionModel().select(outputTab);
                 this.testStatusLabel.setText("Tests run with " + failingTests.length + " failures");
-                this.testStatusLabel.getStyleClass().add("red");
+                if (!this.testStatusLabel.getStyleClass().contains("red")) this.testStatusLabel.getStyleClass().add("red");
             }
-        }else{
+        } else {
             this.codeTabPane.getSelectionModel().select(outputTab);
             this.testStatusLabel.setText("Tests dont compile");
-            this.testStatusLabel.getStyleClass().add("red");
-        }
-        doOutputScaleAnimation();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        if(failingTests != null){
-            for(String k : failingTests){
-                stringBuilder.append(k);
-                stringBuilder.append("\n");
+            if (!this.testStatusLabel.getStyleClass().contains("red")) this.testStatusLabel.getStyleClass().add("red");
+            output.append("Test compile error(s):\n");
+            for (String e : testCompileResult) {
+                output.append(e);
+                output.append("\n");
             }
-        }
-        compilerArea.setText(stringBuilder.toString());
-
-        if(this.logikHandler.isATDD()){
-            if(this.logikHandler.isATDDpassing()){
-                this.atddStatusLabel.setText("Accept. Test not failing");
-                this.atddStatusLabel.getStyleClass().remove("red");
-            }else{
-                this.atddStatusLabel.setText("Accept. Test is failing");
-                this.atddStatusLabel.getStyleClass().add("red");
-            }
+            output.append("\n\n");
         }
     }
 
     private void doOutputScaleAnimation(){
         ParallelTransition pt = new ParallelTransition();
         for(Node c : outputTabContainer.getChildren()){
+            if(c == compilerArea) continue;
             ScaleTransition scale = new ScaleTransition(Duration.millis(250), c);
             scale.setFromX(1);
-            scale.setToX(1.1);
+            scale.setToX(1.15);
             scale.setFromY(1);
-            scale.setToY(1.1);
+            scale.setToY(1.15);
             scale.setAutoReverse(true);
             scale.setCycleCount(2);
             pt.getChildren().add(scale);
