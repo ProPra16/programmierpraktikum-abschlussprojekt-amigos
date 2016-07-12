@@ -64,6 +64,10 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
+        if(status == TDDState.REFACTOR && isOneTestFailing()) {
+            return false;
+        }
+
         if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
             if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
@@ -74,7 +78,7 @@ public class LogikHandler {
             return false;
 
         if(newState == TDDState.WRITE_FAILING_TEST) {
-            if(!isOneTestFailing()) return false;
+
             if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_TEST;
             return true;
@@ -89,6 +93,10 @@ public class LogikHandler {
             }
 
             else return false;
+        }
+
+        if(newState == TDDState.MAKE_PASS_TEST && !isOneTestFailing()) {
+            return false;
         }
 
         status = newState;
