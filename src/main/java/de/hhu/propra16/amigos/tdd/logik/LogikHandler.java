@@ -306,7 +306,10 @@ public class LogikHandler {
         String[] rueckgabe = new String[fails.length];
 
         for(int i = 0; i < rueckgabe.length; i++) {
-            rueckgabe[i] = fails[i].getMessage();
+            if(rueckgabe[i] == null)
+            rueckgabe[i] = fails[i].getMethodName();
+	    else
+	    rueckgabe[i] = fails[i].getMessage();
         }
 
         return rueckgabe;
