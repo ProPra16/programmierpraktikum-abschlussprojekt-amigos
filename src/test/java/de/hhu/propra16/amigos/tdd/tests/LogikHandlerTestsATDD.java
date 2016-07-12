@@ -26,6 +26,18 @@ public class LogikHandlerTestsATDD {
             " public void fail() { \n" +
             "assertFalse(true);\n" +
             " } }";
+    private final String passingATDDTest = testImports +
+            "public class ATDD {  \n" +
+            "@Test\n" +
+            " public void passing() { \n" +
+            "assertTrue(true);\n" +
+            " } }";
+    private final String failingATDDTest = testImports +
+            "public class ATDD {  \n" +
+            "@Test\n" +
+            " public void passing() { \n" +
+            "assertFalse(true);\n" +
+            " } }";
     HashMap<String, String> classes = new HashMap<>();
     HashMap<String, String> tests = new HashMap<>();
     HashMap<String, String> options = new HashMap<>();
@@ -55,12 +67,7 @@ public class LogikHandlerTestsATDD {
     }
     @Test
     public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_WRITE_FAILING_TEST_fails() {
-        simpleHandler.setATDDTest(testImports +
-                "public class ATDD {  \n" +
-                "@Test\n" +
-                " public void passing() { \n" +
-                "assertTrue(true);\n" +
-                " } }");
+        simpleHandler.setATDDTest(passingATDDTest);
         assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
 }
