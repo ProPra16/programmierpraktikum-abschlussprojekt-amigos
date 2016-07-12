@@ -138,10 +138,10 @@ public class LogikHandlerTests {
         assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
     @Test
-    public void switchState_WRITE_FAILING_TEST_to_REFACTOR_pass() {
+    public void switchState_WRITE_FAILING_TEST_to_REFACTOR_fails() {
         setupGoodBase();
         simpleHandler.setTest(oneFailingTest);
-        assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+        assertFalse(simpleHandler.switchState(TDDState.REFACTOR));
     }
     @Test
     public void getNextState_from__WRITE_FAILING_TEST_pass() {
