@@ -254,21 +254,15 @@ public class LogikHandler {
         compileTest.compileAndRunTests();
 
         Object[] failObjects = compileTest.getTestResult().getTestFailures().toArray();
-        TestFailure[] fails = new TestFailure[failObjects.length];
-
-        for(int i = 0; i < fails.length; i++) {
-            fails[i] = (TestFailure) failObjects[i];
-        }
-
-        String[] rueckgabe = new String[fails.length];
+        String[] rueckgabe = new String[failObjects.length];
 
         for(int i = 0; i < rueckgabe.length; i++) {
-            if(rueckgabe[i] == null)
-            rueckgabe[i] = fails[i].getMethodName();
-	    else
-	    rueckgabe[i] = fails[i].getMessage();
+            rueckgabe[i] = ((TestFailure) failObjects[i]).getMessage();
+            if(rueckgabe[i] == null) {
+                rueckgabe[i] = ((TestFailure)failObjects[i]).getMethodName();
+            }
         }
-
+        
         return rueckgabe;
     }
 
