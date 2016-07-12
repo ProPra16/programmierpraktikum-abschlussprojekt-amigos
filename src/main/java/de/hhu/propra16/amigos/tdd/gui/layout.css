@@ -1,0 +1,168 @@
+.root{
+	-fx-background-color:#383838;
+	-fx-font-family:"Courier New", monospace;
+    -fx-text-fill:#e8e8e8;
+    -fx-font-weight: bold;
+}
+.label{
+    -fx-text-fill:#e8e8e8;
+    -fx-background-color:#383838;
+    -fx-font-size:12pt;
+}
+.check-box{
+    -fx-text-fill:#e8e8e8;
+}
+.button{
+    -fx-text-fill:#e8e8e8;
+    -fx-background-color:#ab4642;
+    -fx-background-radius:4;
+    -fx-font-weight:bold;
+    -fx-padding: 10 30 10 30;
+}
+.button:hover{
+    -fx-background-color: #9ACD32;
+}
+.text-area .content{
+    -fx-background-color: #383838;
+}
+.text-area{
+    -fx-text-fill:#e8e8e8;
+    -fx-font-size: 14px;
+}
+.vbox{
+    -fx-border-color:#FFFFFF;
+    -fx-border-stroke:41px;
+}
+
+.scroll-pane, .scroll-pane > .viewport{
+    -fx-background-color: transparent;
+}
+
+/* start_mask */
+.brand{
+	-fx-font-size:20pt;
+    -fx-text-fill:#e8e8e8;
+    -fx-font-weight: normal;
+}
+.brand.mark{
+    -fx-font-weight: bold;
+}
+
+#author{
+	-fx-font-size:10pt;
+    -fx-text-fill:#e8e8e8
+}
+#start{
+    -fx-font-size:16pt;
+}
+
+/* choose_exercise.fxml */
+#task{
+	-fx-font-size:12pt;
+    -fx-text-fill:#e8e8e8;
+}
+
+#ok{
+	-fx-font-size:12pt;
+}
+#load{
+    -fx-font-size:10pt;
+    -fx-padding: 5 15 5 15;
+}
+#listView{
+    -fx-border: 0,5px solid black;
+    -fx-padding:.75em 1em .5em 1em;
+    -fx-background-color:#7cafc2;
+    -fx-color:#e8e8e8;
+}
+
+/* editor.fxml */
+.editor{
+    -fx-background-color: #383838;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #e8e8e8;
+    -fx-text-fill:#C8FE2E;
+    -fx-font-size: 16px;
+}
+
+#outputTabContainer{
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #e8e8e8;
+    -fx-font-size:12pt;
+
+}
+
+#timer{
+    -fx-font-size:18pt;
+    -fx-background-color:#e8e8e8;
+    -fx-text-fill: #ba2e22;
+}
+.controlButton{
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: #383838;
+    -fx-background-radius:4;
+}
+.controlButton:hover{
+    -fx-background-color: #9ACD32;
+}
+.controlButton:disabled{
+    -fx-text-fill: #9b9b9b;
+    -fx-opacity: 0.6;
+}
+.hide-bar{
+    fx-tab-max-height:0;
+}
+.hide-bar .tab-header-area{
+    visibility: hidden;
+    -fx-max-height:0;
+}
+#step{
+    -fx-text-fill:#F78181;
+}
+#exerciseDescription{
+    -fx-font-size: 10pt;
+    -fx-font-weight: normal;
+}
+.statuslabel{
+    -fx-font-size: 14pt;
+    -fx-text-fill: #00F923;
+}
+.statuslabel.red {
+     -fx-text-fill: #ff2b14;
+}
+
+
+
+/* richtextfx */
+.styled-text-area .text{
+    -fx-fill: #a9b7c6;
+}
+.styled-text-area .caret{
+    -fx-stroke: #bbbbbb;
+}
+.styled-text-area .text.keyword{
+    -fx-fill: #cc7832;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.string{
+    -fx-fill:#2E9AFE;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.brace{
+    -fx-fill:#FFFFFF;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.bracket{
+    -fx-fill:#FFFFFF;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.comment{
+    -fx-fill: #7a7c7f;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.semicolon{
+    -fx-fill:#FFFFFF;
+    -fx-font-weight: bold;
+}
