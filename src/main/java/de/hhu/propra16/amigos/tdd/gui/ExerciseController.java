@@ -1,6 +1,6 @@
 package de.hhu.propra16.amigos.tdd.gui;
 
-import de.hhu.propra16.amigos.tdd.gui.controls.TDDCodeArea;
+import de.hhu.propra16.amigos.tdd.gui.controls.FormattableTDDCodeArea;
 import de.hhu.propra16.amigos.tdd.logik.CodeObject;
 import de.hhu.propra16.amigos.tdd.logik.LogikHandler;
 import de.hhu.propra16.amigos.tdd.logik.TDDState;
@@ -10,13 +10,16 @@ import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.InputStream;
 import java.util.Timer;
@@ -39,7 +42,7 @@ public class ExerciseController {
     @FXML
     private CheckBox displayCodeTestsBesideCheckbox;
     @FXML
-    private TDDCodeArea codeArea, testArea, atddArea;
+    private FormattableTDDCodeArea codeArea, testArea, atddArea;
     @FXML
     private Tab codeTestTab, testTab, atddTab, outputTab;
     @FXML
@@ -79,6 +82,11 @@ public class ExerciseController {
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
+    }
+
+    public void initializeHotkeys(Scene scene){
+        KeyCodeCombination ctrlSpace = new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_ANY);
+        scene.getAccelerators().put(ctrlSpace, this::formatCode);
     }
 
     private void applyStateToGUI(){
@@ -137,6 +145,7 @@ public class ExerciseController {
 
     private void runAndUpdateGUI(boolean switchAlwaysToOutputTab){
         StringBuilder output = new StringBuilder();
+        formatCode();
         this.logikHandler.setCode(this.codeArea.getText());
         this.logikHandler.setTest(this.testArea.getText());
 
@@ -149,6 +158,12 @@ public class ExerciseController {
         if(outputString.equals("")) outputString = "Nothing here, all fine :)";
         compilerArea.setText(outputString);
         doOutputScaleAnimation();
+    }
+
+    private void formatCode() {
+        this.codeArea.formatCode();
+        this.testArea.formatCode();
+        this.atddArea.formatCode();
     }
 
     private void updateGuiForAtdd(StringBuilder output) {
