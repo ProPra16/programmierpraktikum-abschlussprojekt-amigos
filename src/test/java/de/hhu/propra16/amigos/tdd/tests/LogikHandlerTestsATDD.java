@@ -75,4 +75,9 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setATDDTest(failingATDDTest);
         assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_WRITE_FAILING_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
 }
