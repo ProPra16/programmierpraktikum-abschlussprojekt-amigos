@@ -185,7 +185,7 @@ public class LogikHandler {
 
         if(!compileTest.getCompilerResult().hasCompileErrors()) {
             aTDDTest = pTest;
-            aTDDTestUnit = new CompilationUnit(aTDDTest, "ATDD", true);
+            aTDDTestUnit = new CompilationUnit("ATDD", aTDDTest, true);
 
             return null;
         }
