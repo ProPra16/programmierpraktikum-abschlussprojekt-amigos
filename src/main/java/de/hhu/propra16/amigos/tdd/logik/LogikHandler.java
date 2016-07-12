@@ -64,8 +64,13 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
-        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) || (status == TDDState.REFACTOR && newState == TDDState.WRITE_FAILING_TEST)) {
+        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) || (aTDD && status == TDDState.REFACTOR && newState == TDDState.WRITE_FAILING_TEST)) {
             return false;
+        }
+
+        if(!aTDD && status == TDDState.REFACTOR && !isOneTestFailing() && newState == TDDState.WRITE_FAILING_TEST) {
+            status = TDDState.WRITE_FAILING_TEST;
+            return true;
         }
 
         if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
