@@ -178,7 +178,7 @@ public class LogikHandler {
     }
 
     public String[] setATDDTest(String pTest) {
-        CompilationUnit testATDD = new CompilationUnit(pTest, "ATDD", true);
+        CompilationUnit testATDD = new CompilationUnit("ATDD", pTest, true);
 
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testATDD, aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
