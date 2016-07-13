@@ -144,7 +144,7 @@ public class LogikHandlerTests {
         assertFalse(simpleHandler.switchState(TDDState.REFACTOR));
     }
     @Test
-    public void getNextState_from__WRITE_FAILING_TEST_pass() {
+    public void getNextState_from_WRITE_FAILING_TEST_pass() {
         setupGoodBase();
         simpleHandler.setTest(oneFailingTest);
         assertTrue(simpleHandler.getNextState()==TDDState.MAKE_PASS_TEST);

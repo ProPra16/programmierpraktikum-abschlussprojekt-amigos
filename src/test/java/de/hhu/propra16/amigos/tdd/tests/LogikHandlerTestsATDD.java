@@ -66,9 +66,33 @@ public class LogikHandlerTestsATDD {
         assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
     }
     @Test
+    public void getNextState_from_WRITE_FAILING_ACCEPTANCE_TEST_pass() {
+        assertTrue(simpleHandler.getNextState()==TDDState.WRITE_FAILING_TEST);
+    }
+    @Test
     public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_WRITE_FAILING_TEST_fails() {
         simpleHandler.setATDDTest(passingATDDTest);
         assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        simpleHandler.setTest(oneFailingTest);
+        assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
+   /* @Test
+    public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        simpleHandler.setTest(onePassingTest);
+        assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    } */
+    @Test
+    public void getNextState_from_WRITE_FAILING_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        assertTrue(simpleHandler.getNextState()==TDDState.MAKE_PASS_TEST);
     }
     @Test
     public void switchState_WRITE_FAILING_ACCEPTANCE_TEST_to_MAKE_PASS_TEST_fails() {
@@ -162,5 +186,22 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setATDDTest(passingATDDTest);
         assertTrue(simpleHandler.isATDDpassing());
     }
-    // TODO: getNextState(...), babysteps.., jederzeit auf WRITE_FAILING_ACCEPTANCE_TEST
+    @Test
+    public void isOneTestFailing_true() {
+        tests.put("Fail","Fail");
+        simpleHandler.setTest(oneFailingTest);
+        assertTrue(simpleHandler.isOneTestFailing());
+    }
+    @Test
+    public void isOneTestFailing_false() {
+        simpleHandler.setTest(onePassingTest);
+        assertFalse(simpleHandler.isOneTestFailing());
+    }
+    @Test
+    public void isOneTestFailing_ATDD_false() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.setTest(onePassingTest);
+        assertFalse(simpleHandler.isOneTestFailing());
+    }
+    // TODO: getNextState(...), babysteps.., jederzeit auf WRITE_FAILING_ACCEPTANCE_TEST, test xml handler..
 }
