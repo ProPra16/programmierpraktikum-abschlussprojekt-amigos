@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -39,7 +40,7 @@ public class ChooseExerciseController implements Initializable{
 
     private void tryLoadFile(File file, boolean silent){
         try{
-            Katalog loaded = KatalogStore.lese(file);
+            Katalog loaded = KatalogStore.lese(new FileInputStream(file));
             if(loaded == null) throw new IllegalArgumentException();
 
             this.loadedCatalog = loaded;
