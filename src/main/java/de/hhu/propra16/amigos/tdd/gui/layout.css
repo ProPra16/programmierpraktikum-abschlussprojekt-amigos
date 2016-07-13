@@ -121,6 +121,9 @@
 #step{
     -fx-text-fill:#F78181;
 }
+#exerciseLabel{
+    -fx-underline: true;
+}
 #exerciseDescription{
     -fx-font-size: 10pt;
     -fx-font-weight: normal;

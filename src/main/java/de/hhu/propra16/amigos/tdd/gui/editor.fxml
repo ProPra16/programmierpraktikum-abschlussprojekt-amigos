@@ -61,12 +61,12 @@
             <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Code/Tests beside" selected="true" onAction="#checkBesideChanged" />
         </VBox>
 
-        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="6" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="6" GridPane.rowIndex="0" GridPane.halignment="RIGHT" minWidth="150">
             <Label id="timerInfoLabel" text="${'Limit active:\n\nTime left\nfor this Phase\nbefore Reset:'}"/>
             <Label fx:id="timerLabel" id="timer" text="02:00" />
         </VBox>
         <VBox fx:id="exerciseContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
-            <Label fx:id="exerciseLabel" text="AufgabeXY" wrapText="true" />
+            <Label fx:id="exerciseLabel" id="exerciseLabel" text="AufgabeXY" wrapText="true" />
             <ScrollPane fitToWidth="true">
                 <content>
                     <Label fx:id="exerciseDescription" id="exerciseDescription" wrapText="true" />
@@ -96,7 +96,7 @@
             </Tab>
             <Tab text="Acceptance Tests" fx:id="atddTab">
                 <content>
-                    <TDDCodeArea styleClass="editor" fx:id="atddArea" text="class ATDD {&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <TDDCodeArea styleClass="editor" fx:id="atddArea" text="import static org.junit.Assert.*;&#10;import org.junit.Test;&#10;&#10;class ATDD {&#10;//Write failing acceptance Test here&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
             <Tab text="Compile/Test Output" fx:id="outputTab" >

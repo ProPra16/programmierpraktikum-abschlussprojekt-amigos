@@ -2,31 +2,36 @@
     <exercise>
 
         <name>
-            Currency Converter
+            Plateau ( normal Mode )
         </name>
 
         <description>
-            Your Code should change Euro into Japanese Yen.
+Eingabe: Beliebig viele Integer Zahlen.
+Ausgabe: Die Laenge ( 1. Element im Array ) und die Startposition ( 2. Element im Array ) des laengsten Plateaus.
+Ein Plateau ist eine Sequenz gleicher Zahlen, die durch zwei niedrigere Zahlen direkt links bzw. rechts davon begrenzt wird. Der Rückgabewert soll NULL sein, wenn weniger als drei Zahlen uebergeben werden. Der Rückgabewert fuer die Laenge soll 0 und die Position -1 sein, wenn es kein laengstes Plateau gibt.
+Gehen Sie davon aus, dass es hoechstens ein laengstes Plateau gibt.
         </description>
 
         <classes>
 
-            <class name="CurrencyConverter">
-public class CurrencyConverter {
-
+            <class name="Plateau">
+class Plateau {
+    public static int[] laengstesPlateu(int[] Eingabe){
+        //ToDo: implementieren sie den Code hier
+    }
 }
             </class>
 
             <tests>
 
-                <test name="CurrencyConverterTest">
+                <test name="PlateauTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class CurrencyConverterTest {
+class PlateauTest {
     @Test
     public void testSomething() {
-
+        //ToDo: Schreiben sie selbstständig Tests für die Aufgabe.
     }
 }
                 </test>
@@ -36,41 +41,41 @@ public class CurrencyConverterTest {
         </classes>
 
         <options>
-
-            <option name="Option Name" value="Wert gegebenfalls" />
-
         </options>
 
     </exercise>
     <exercise>
 
         <name>
-            Customer
+            Pruefziffern ( ATDD )
         </name>
 
         <description>
-            Imagine you are the owner from a little store, but the Problem is that you are forgetful. So you want to make a program where you can save the name from your Customers.
+In dieser Aufgabe werden Sie eine Methode und die dazugehoerigen Tests mit Hilfe einer echten Spezifikation aus dem normalen Entwickleralltag schreiben. Die Spezifikation beschreibt die Plausibilit¨atsprufung von Kontonummern. Informieren Sie sich selbstständig über die Spezifikation und versuchen Sie diese mithilfe von Akzeptanztests umzusetzen.
         </description>
 
         <classes>
 
-            <class name="Customer">
-public class Customer {
+            <class name="Pruefziffern">
+class Pruefziffern {
 
+    public static boolean pruefe17(int[] ziffern) {
+        // Implementieren Sie Ihre Loesung hier 
+    }
 }
             </class>
 
             <tests>
 
-                <test name="CustomerTest">
+                <test name="PruefziffernTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class CustomerTest {
+class PruefziffernTest {
 
     @Test
     public void testSomething {
-
+        //implementieren Sie Tests für kleinere Zwischenschritte hier
     }
 }
                 </test>
@@ -80,84 +85,28 @@ public class CustomerTest {
         </classes>
 
         <options>
-
-            <option name="Option Name" value="Wert gegebenfalls" />
-
+            <option name="ATDD" value="true" />
         </options>
 
     </exercise>
     <exercise>
 
         <name>
-            Lorem Ipsum
+            Roman Numbers ( Babysteps )
         </name>
 
         <description>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-
-            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
-
-            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
-
-            Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.
-
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-        </description>
-
-        <classes>
-
-            <class name="TDDCode">
-public class TDDCode{
-
-}
-            </class>
-
-            <tests>
-
-                <test name="TDDTest">
-public class TDDTest{
-
-}
-                </test>
-
-            </tests>
-
-        </classes>
-
-        <options>
-
-            <option name="Option Name" value="Wert gegebenfalls" />
-
-        </options>
-
-    </exercise>
-    <exercise>
-
-        <name>
-            Roman Numbers
-        </name>
-
-        <description>
-            Your Code should convert arabic numbers into roman numbers.
+Your Code should convert arabic numbers into roman numbers.
+Be careful: you only have 3 minutes for each phase except refactoring, so try to take small steps to avoid getting your code reset.
         </description>
 
         <classes>
 
             <class name="RomanNumberConverter">
-public class RomanNumberConverter {
-
+class RomanNumberConverter {
+    public static String convertToRoman(int input){
+        //Implement your solution here
+    }
 }
             </class>
 
@@ -167,11 +116,11 @@ public class RomanNumberConverter {
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class RomanNumbersTest {
+class RomanNumbersTest {
 
     @Test
     public void testSomething() {
-
+        //implement tests for small steps here
     }
 }
                 </test>
@@ -182,7 +131,7 @@ public class RomanNumbersTest {
 
         <options>
 
-            <option name="Option Name" value="Wert gegebenfalls" />
+            <option name="babysteps" value="1" />
 
         </options>
 

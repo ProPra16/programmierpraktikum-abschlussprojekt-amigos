@@ -100,6 +100,7 @@ public class ExerciseController {
                 testArea.setDisable(true);
                 atddArea.setDisable(false);
                 nextStep.setText("Current task: Write an failing or not compiling acceptance test");
+                break;
             case REFACTOR:
                 codeArea.setDisable(false);
                 testArea.setDisable(false);
@@ -115,8 +116,8 @@ public class ExerciseController {
 
         this.prevPhaseButton.setDisable(this.logikHandler.getState() != TDDState.MAKE_PASS_TEST );
         if(this.logikHandler.getState() != TDDState.MAKE_PASS_TEST  && this.logikHandler.isATDD()){
-            this.prevPhaseButton.setDisable(false);
-            this.prevPhaseButton.setText("Change Accept Test");
+            this.prevPhaseButton.setDisable( this.logikHandler.getState() == TDDState.WRITE_FAILING_ACCEPTANCE_TEST );
+            this.prevPhaseButton.setText("Change ATDD");
         }else{
             this.prevPhaseButton.setText("Prev Phase");
         }
@@ -129,6 +130,7 @@ public class ExerciseController {
         }else{
             babyStepContainer.setVisible(false);
         }
+        if(this.logikHandler.getState() == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) this.codeTabPane.getSelectionModel().select(atddTab);
     }
 
     public void runCode(){
@@ -152,7 +154,11 @@ public class ExerciseController {
     }
 
     private void updateGuiForAtdd(StringBuilder output) {
-        String[] compileResult = this.logikHandler.setATDDTest(this.atddArea.getText());
+        String[] compileResult = null;
+        try{
+            compileResult = this.logikHandler.setATDDTest(this.atddArea.getText());
+        }catch(Exception ex){}
+
         if(this.logikHandler.isATDDpassing()){
             this.atddStatusLabel.setText("Accept. Test not failing");
             this.atddStatusLabel.getStyleClass().remove("red");
@@ -160,12 +166,14 @@ public class ExerciseController {
             this.atddStatusLabel.setText("Accept. Test is failing");
             if(!this.atddStatusLabel.getStyleClass().contains("red")) this.atddStatusLabel.getStyleClass().add("red");
         }
-        output.append("Acceptance Test error(s):\n");
-        for(String e : compileResult){
-            output.append(e);
-            output.append("\n");
+        if(compileResult != null){
+            output.append("Acceptance Test error(s):\n");
+            for(String e : compileResult){
+                output.append(e);
+                output.append("\n");
+            }
+            output.append("\n\n\n");
         }
-        output.append("\n\n\n");
     }
 
     private void updateGuiForCode(StringBuilder output) {
@@ -266,8 +274,8 @@ public class ExerciseController {
 
     private void babyStepTimeout(){
         CodeObject oldcode = this.logikHandler.BabyStepBack();
-        this.codeArea.setText(oldcode.getCode());
-        this.testArea.setText(oldcode.getTest());
+        if(oldcode.getCode() != null ) this.codeArea.setText(oldcode.getCode());
+        if(oldcode.getTest() != null ) this.testArea.setText(oldcode.getTest());
 
         Alert alert = new Alert(Alert.AlertType.ERROR, "You have to be faster!", ButtonType.CLOSE);
         alert.setContentText("Sorry, the time for this phase expired :( As this exercise is configured with a time limit for the green and red Phase, your code was reset. Try again and be faster this time! (maybe take some smaller steps...)");
