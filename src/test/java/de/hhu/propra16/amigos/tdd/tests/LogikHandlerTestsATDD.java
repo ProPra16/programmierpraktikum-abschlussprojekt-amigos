@@ -82,6 +82,12 @@ public class LogikHandlerTestsATDD {
         assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
     @Test
+    public void switchState_WRITE_FAILING_TEST_to_WRITE_FAILING_ACCEPTANCE_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_ACCEPTANCE_TEST));
+    }
+    @Test
     public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
         simpleHandler.setATDDTest(failingATDDTest);
         simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
@@ -123,6 +129,14 @@ public class LogikHandlerTestsATDD {
         simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
         simpleHandler.setTest(onePassingTest);
         assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_WRITE_FAILING_ACCEPTANCE_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_ACCEPTANCE_TEST));
     }
     @Test
     public void getNextState_from_MAKE_PASS_TEST_pass() {
@@ -221,5 +235,5 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
-    // TODO: babysteps.., jederzeit auf WRITE_FAILING_ACCEPTANCE_TEST, test xml handler..
+    // TODO: babysteps.., test xml handler..
 }
