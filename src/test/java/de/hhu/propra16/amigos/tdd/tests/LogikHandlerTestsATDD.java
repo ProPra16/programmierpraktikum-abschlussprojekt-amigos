@@ -235,5 +235,4 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
-    // TODO: babysteps.., test xml handler..
 }
