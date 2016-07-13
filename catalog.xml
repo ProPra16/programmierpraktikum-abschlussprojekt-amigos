@@ -2,31 +2,36 @@
     <exercise>
 
         <name>
-            Currency Converter
+            Plateau ( normal Mode )
         </name>
 
         <description>
-            Your Code should change Euro into Japanese Yen.
+Eingabe: Beliebig viele Integer Zahlen.
+Ausgabe: Die Laenge ( 1. Element im Array ) und die Startposition ( 2. Element im Array ) des laengsten Plateaus.
+Ein Plateau ist eine Sequenz gleicher Zahlen, die durch zwei niedrigere Zahlen direkt links bzw. rechts davon begrenzt wird. Der Rückgabewert soll NULL sein, wenn weniger als drei Zahlen uebergeben werden. Der Rückgabewert fuer die Laenge soll 0 und die Position -1 sein, wenn es kein laengstes Plateau gibt.
+Gehen Sie davon aus, dass es hoechstens ein laengstes Plateau gibt.
         </description>
 
         <classes>
 
-            <class name="CurrencyConverter">
-public class CurrencyConverter {
-
+            <class name="Plateau">
+class Plateau {
+    public static int[] laengstesPlateu(int[] Eingabe){
+        //ToDo: implementieren sie den Code hier
+    }
 }
             </class>
 
             <tests>
 
-                <test name="CurrencyConverterTest">
+                <test name="PlateauTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class CurrencyConverterTest {
+class PlateauTest {
     @Test
     public void testSomething() {
-
+        //ToDo: Schreiben sie selbstständig Tests für die Aufgabe.
     }
 }
                 </test>
@@ -36,41 +41,41 @@ public class CurrencyConverterTest {
         </classes>
 
         <options>
-
-            <option name="Option Name" value="Wert gegebenfalls" />
-
         </options>
 
     </exercise>
     <exercise>
 
         <name>
-            Customer
+            Pruefziffern ( ATDD )
         </name>
 
         <description>
-            Imagine you are the owner from a little store, but the Problem is that you are forgetful. So you want to make a program where you can save the name from your Customers.
+In dieser Aufgabe werden Sie eine Methode und die dazugehoerigen Tests mit Hilfe einer echten Spezifikation aus dem normalen Entwickleralltag schreiben. Die Spezifikation beschreibt die Plausibilit¨atsprufung von Kontonummern. Informieren Sie sich selbstständig über die Spezifikation und versuchen Sie diese mithilfe von Akzeptanztests umzusetzen.
         </description>
 
         <classes>
 
-            <class name="Customer">
-public class Customer {
+            <class name="Pruefziffern">
+class Pruefziffern {
 
+    public static boolean pruefe17(int[] ziffern) {
+        // Implementieren Sie Ihre Loesung hier 
+    }
 }
             </class>
 
             <tests>
 
-                <test name="CustomerTest">
+                <test name="PruefziffernTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class CustomerTest {
+class PruefziffernTest {
 
     @Test
     public void testSomething {
-
+        //implementieren Sie Tests für kleinere Zwischenschritte hier
     }
 }
                 </test>
@@ -80,27 +85,28 @@ public class CustomerTest {
         </classes>
 
         <options>
-
-            <option name="Option Name" value="Wert gegebenfalls" />
-
+            <option name="ATDD" value="true" />
         </options>
 
     </exercise>
     <exercise>
 
         <name>
-            Roman Numbers
+            Roman Numbers ( Babysteps )
         </name>
 
         <description>
-            Your Code should convert arabic numbers into roman numbers.
+Your Code should convert arabic numbers into roman numbers.
+Be careful: you only have 3 minutes for each phase except refactoring, so try to take small steps to avoid getting your code reset.
         </description>
 
         <classes>
 
             <class name="RomanNumberConverter">
-public class RomanNumberConverter {
-
+class RomanNumberConverter {
+    public static String convertToRoman(int input){
+        //Implement your solution here
+    }
 }
             </class>
 
@@ -110,11 +116,11 @@ public class RomanNumberConverter {
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class RomanNumbersTest {
+class RomanNumbersTest {
 
     @Test
     public void testSomething() {
-
+        //implement tests for small steps here
     }
 }
                 </test>
@@ -125,7 +131,7 @@ public class RomanNumbersTest {
 
         <options>
 
-            <option name="babysteps" value="true" />
+            <option name="babysteps" value="1" />
 
         </options>
 
