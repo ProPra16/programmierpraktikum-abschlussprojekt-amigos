@@ -106,7 +106,9 @@ public class ChooseExerciseController implements Initializable{
             stage.setTitle(selectedExercise.getName() + " | TDD Trainer");
             stage.setMinHeight(600);
             stage.setMinWidth(500);
-            stage.setScene(new Scene(root, 1050, 800));
+            Scene scene = new Scene(root, 1050, 800);
+            stage.setScene(scene);
+            exContr.initializeHotkeys(scene);
             stage.show();
             stage.setMaximized(true);
         }catch(Exception ex){

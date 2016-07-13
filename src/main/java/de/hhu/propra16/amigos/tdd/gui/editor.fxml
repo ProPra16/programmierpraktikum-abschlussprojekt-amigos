@@ -6,15 +6,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.VBox?>
-<?import de.hhu.propra16.amigos.tdd.gui.controls.TDDCodeArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.CheckBox?>
-
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.HBox?>
+<?import de.hhu.propra16.amigos.tdd.gui.controls.FormattableTDDCodeArea?>
+
 <GridPane fx:controller="de.hhu.propra16.amigos.tdd.gui.ExerciseController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT" hgap="10" vgap="10" styleClass="root" maxWidth="Infinity" maxHeight="Infinity">
     <padding><Insets top="10" bottom="10" left="20" right="20"/></padding>
@@ -85,8 +84,8 @@
                             <ColumnConstraints percentWidth="50" />
                             <ColumnConstraints percentWidth="50" />
                         </columnConstraints>
-                        <TDDCodeArea styleClass="editor" fx:id="codeArea" text="Code" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                        <TDDCodeArea styleClass="editor" fx:id="testArea" text="Test" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <FormattableTDDCodeArea styleClass="editor" fx:id="codeArea" text="Code" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <FormattableTDDCodeArea styleClass="editor" fx:id="testArea" text="Test" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                     </GridPane>
                 </content>
             </Tab>
@@ -96,7 +95,7 @@
             </Tab>
             <Tab text="Acceptance Tests" fx:id="atddTab">
                 <content>
-                    <TDDCodeArea styleClass="editor" fx:id="atddArea" text="import static org.junit.Assert.*;&#10;import org.junit.Test;&#10;&#10;class ATDD {&#10;//Write failing acceptance Test here&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <FormattableTDDCodeArea styleClass="editor" fx:id="atddArea" text="import static org.junit.Assert.*;&#10;import org.junit.Test;&#10;&#10;class ATDD {&#10;//Write failing acceptance Test here&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
             <Tab text="Compile/Test Output" fx:id="outputTab" >
