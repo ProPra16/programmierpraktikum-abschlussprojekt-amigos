@@ -81,13 +81,13 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setTest(oneFailingTest);
         assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
     }
-   /* @Test
+    @Test
     public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
         simpleHandler.setATDDTest(failingATDDTest);
         simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
         simpleHandler.setTest(onePassingTest);
-        assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
-    } */
+        assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
     @Test
     public void getNextState_from_WRITE_FAILING_TEST_pass() {
         simpleHandler.setATDDTest(failingATDDTest);
@@ -125,6 +125,14 @@ public class LogikHandlerTestsATDD {
         assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
     }
     @Test
+    public void getNextState_from_MAKE_PASS_TEST_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertTrue(simpleHandler.getNextState()==TDDState.REFACTOR);
+    }
+    @Test
     public void switchState_REFACTOR_to_WRITE_FAILING_ACCEPTANCE_TEST_pass() {
         simpleHandler.setATDDTest(failingATDDTest);
         simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
@@ -133,6 +141,16 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setTest(onePassingTest);
         simpleHandler.switchState(TDDState.REFACTOR);
         assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_ACCEPTANCE_TEST));
+    }
+    @Test
+    public void getNextState_from_REFACTOR_pass() {
+        simpleHandler.setATDDTest(failingATDDTest);
+        simpleHandler.switchState(TDDState.WRITE_FAILING_TEST);
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        assertTrue(simpleHandler.getNextState()==TDDState.WRITE_FAILING_ACCEPTANCE_TEST);
     }
     @Test
     public void switchState_REFACTOR_to_WRITE_FAILING_ACCEPTANCE_TEST_fails_from_code() {
@@ -203,5 +221,5 @@ public class LogikHandlerTestsATDD {
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
-    // TODO: getNextState(...), babysteps.., jederzeit auf WRITE_FAILING_ACCEPTANCE_TEST, test xml handler..
+    // TODO: babysteps.., jederzeit auf WRITE_FAILING_ACCEPTANCE_TEST, test xml handler..
 }
