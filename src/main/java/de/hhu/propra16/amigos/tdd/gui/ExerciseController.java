@@ -21,6 +21,8 @@ import javafx.util.Duration;
 import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.Desktop;
+import java.net.URI;
 
 public class ExerciseController {
     private Exercise exercise;
@@ -47,7 +49,7 @@ public class ExerciseController {
     @FXML
     private GridPane menuPane, codeTestGridPane;
     @FXML
-    private Button prevPhaseButton;
+    private Button prevPhaseButton, facebookButton, twitterButton;
     @FXML
     private VBox babyStepContainer, exerciseContainer, outputTabContainer;
 
@@ -373,6 +375,30 @@ public class ExerciseController {
         this.switchStateAnimation(this.logikHandler.getState());
         this.applyStateToGUI();
     }
+    public void facebook() {
+if(Desktop.isDesktopSupported()){
+new Thread(() -> {
+           try {
+               Desktop.getDesktop().browse( new URI( "http://facebook.com" ) );
+           } catch (Exception ex) {
+               ex.printStackTrace();
+           }
+       }).start();
+}
 
+}
+
+    public void twitter() {
+if(Desktop.isDesktopSupported()){
+new Thread(() -> {
+           try {
+               Desktop.getDesktop().browse( new URI( "http://twitter.com/share?text=" ) );
+           } catch (Exception ex) {
+               ex.printStackTrace();
+           }
+       }).start();
+}
+
+}
 
 }

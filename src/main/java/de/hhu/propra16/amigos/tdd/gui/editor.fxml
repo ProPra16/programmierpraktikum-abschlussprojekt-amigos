@@ -74,6 +74,29 @@
             </ScrollPane>
             <Label id="step" fx:id="nextStep" text="" />
         </VBox>
+	<VBox GridPane.columnIndex="10" spacing="15">
+            <Button id="socialMediaButton" fx:id="facebookButton" styleClass="socialMediaButton" text="" onAction="#facebook" >
+                <graphic>
+                    <ImageView>
+                        <Image url="@Facebook-Button.png" requestedWidth="40.0" requestedHeight="40.0"/>
+                    </ImageView>
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Share your Progress with your Friends on Facebook"/>
+                </tooltip>
+            </Button>
+            <Button id="socialMediaButton" fx:id="twitterButton" styleClass="socialMediaButton" text="" onAction="#twitter">
+                <graphic>
+                    <ImageView>
+                        <Image url="@twitterICON.png" requestedWidth="40.0" requestedHeight="40.0"/>
+                    </ImageView>
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Share your Progress with your Twitter Followers"/>
+                </tooltip>
+            </Button>
+
+        </VBox>
     </GridPane>
 
     <TabPane fx:id="codeTabPane" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnSpan="2" tabClosingPolicy="UNAVAILABLE">
