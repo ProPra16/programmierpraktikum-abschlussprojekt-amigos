@@ -6,23 +6,31 @@ import de.hhu.propra16.amigos.tdd.logik.LogikHandler;
 import de.hhu.propra16.amigos.tdd.logik.TDDState;
 import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
-import javafx.animation.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.awt.Desktop;
-import java.net.URI;
 
 public class ExerciseController {
     private Exercise exercise;
@@ -376,29 +384,33 @@ public class ExerciseController {
         this.applyStateToGUI();
     }
     public void facebook() {
-if(Desktop.isDesktopSupported()){
-new Thread(() -> {
-           try {
-               Desktop.getDesktop().browse( new URI( "http://facebook.com" ) );
-           } catch (Exception ex) {
-               ex.printStackTrace();
-           }
-       }).start();
-}
+        if(Desktop.isDesktopSupported()){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Attention", ButtonType.CLOSE);
+            alert.setContentText("Paste the copied text to your Facebook wall.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+            new Thread(() -> {
+                try {
+                    Desktop.getDesktop().browse( new URI( "http://facebook.com" ) );
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection("I'm just solving the exercise " + this.exercise.getName() + " using #TDD"), null);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
 
 }
 
     public void twitter() {
-if(Desktop.isDesktopSupported()){
-new Thread(() -> {
-           try {
-               Desktop.getDesktop().browse( new URI( "http://twitter.com/share?text=" ) );
-           } catch (Exception ex) {
-               ex.printStackTrace();
-           }
-       }).start();
-}
-
-}
+        if (Desktop.isDesktopSupported()) {
+            new Thread(() -> {
+                try {
+                    Desktop.getDesktop().browse(new URI("http://twitter.com/share?text="+ URLEncoder.encode("I'm just solving the exercise " + this.exercise.getName() + " using #TDD")));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
+    }
 
 }
