@@ -10,8 +10,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 public class KatalogStore {
@@ -24,7 +24,7 @@ public class KatalogStore {
      *  Schmeißt Exceptions, damit Fehlermeldungen an anderen Stellen im Programm
      *  ausgegeben bzw. behandelt werden können
      */
-    public static Katalog lese(FileInputStream f) throws Exception {
+    public static Katalog lese(InputStream f) throws Exception {
         if(f.available() == 0) {
             return new Katalog();
         }
@@ -71,7 +71,7 @@ public class KatalogStore {
      * @param k Übergibt den zu speichernden Katalog
      * @param f Übergibt den Ort zum Speichern jetzt als Stream
      */
-    public static void save(Katalog k, FileOutputStream f) {
+    public static void save(Katalog k, OutputStream f) {
         try {
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
