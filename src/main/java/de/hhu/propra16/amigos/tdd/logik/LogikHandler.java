@@ -64,91 +64,48 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
-        if(!aTDD) {
-
-            if (status == TDDState.REFACTOR) {
-                if (newState == TDDState.WRITE_FAILING_TEST && tryCompileTest() == null && tryCompileCode() == null && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if (status == TDDState.WRITE_FAILING_TEST) {
-                if (newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
-                    status = newState;
-                    return true;
-                }
-
-                if (newState == TDDState.REFACTOR) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if (status == TDDState.MAKE_PASS_TEST) {
-                if (newState == TDDState.WRITE_FAILING_TEST) {
-                    status = newState;
-                    return true;
-                }
-
-                if (newState == TDDState.REFACTOR && tryCompileCode() == null && tryCompileTest() == null && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
+        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) || (aTDD && status == TDDState.REFACTOR && newState == TDDState.WRITE_FAILING_TEST)) {
+            return false;
         }
 
-        else {
-            if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
-                if(newState == TDDState.REFACTOR) {
-                    status = newState;
-                    return true;
-                }
-
-                if(newState == TDDState.WRITE_FAILING_TEST && !isATDDpassing()) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.WRITE_FAILING_TEST) {
-                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
-                    status = newState;
-                    return true;
-                }
-                if(newState == TDDState.MAKE_PASS_TEST && isOneTestFailing()) {
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.MAKE_PASS_TEST) {
-                if(newState == TDDState.WRITE_FAILING_TEST) {
-                    status = newState;
-                    return true;
-                }
-
-                if(newState == TDDState.REFACTOR && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-            if(status == TDDState.REFACTOR) {
-                if(newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && !isOneTestFailing()) {
-                    lastPassed.convertToValuesOf(aktuell);
-                    status = newState;
-                    return true;
-                }
-            }
-
-
+        if(!aTDD && status == TDDState.REFACTOR && !isOneTestFailing() && newState == TDDState.WRITE_FAILING_TEST) {
+            status = TDDState.WRITE_FAILING_TEST;
+            return true;
         }
 
-        return false;
+        if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
+            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
+            status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
+            return true;
+        }
+
+        if(newState != getNextState() && newState != TDDState.WRITE_FAILING_TEST)
+            return false;
+
+        if(newState == TDDState.WRITE_FAILING_TEST) {
+
+            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
+            status = TDDState.WRITE_FAILING_TEST;
+            return true;
+        }
+
+        // From now on, a state can only be a next state as given by getNextState()
+
+        if(newState == TDDState.REFACTOR) {
+            if(tryCompileTest() == null && tryCompileCode() == null) {
+                status = newState;
+                return true;
+            }
+
+            else return false;
+        }
+
+        if(newState == TDDState.MAKE_PASS_TEST && !isOneTestFailing()) {
+            return false;
+        }
+
+        status = newState;
+        return true;
     }
 
     public boolean isATDD(){
@@ -178,14 +135,14 @@ public class LogikHandler {
     }
 
     public String[] setATDDTest(String pTest) {
-        CompilationUnit testATDD = new CompilationUnit(pTest, "ATDD", true);
+        CompilationUnit testATDD = new CompilationUnit("ATDD", pTest, true);
 
         InternalCompiler compileTest = new InternalCompiler(new CompilationUnit[] {testATDD, aktuell.getCodeUnit()});
         compileTest.compileAndRunTests();
 
         if(!compileTest.getCompilerResult().hasCompileErrors()) {
             aTDDTest = pTest;
-            aTDDTestUnit = new CompilationUnit(aTDDTest, "ATDD", true);
+            aTDDTestUnit = new CompilationUnit("ATDD", aTDDTest, true);
 
             return null;
         }
@@ -297,18 +254,15 @@ public class LogikHandler {
         compileTest.compileAndRunTests();
 
         Object[] failObjects = compileTest.getTestResult().getTestFailures().toArray();
-        TestFailure[] fails = new TestFailure[failObjects.length];
-
-        for(int i = 0; i < fails.length; i++) {
-            fails[i] = (TestFailure) failObjects[i];
-        }
-
-        String[] rueckgabe = new String[fails.length];
+        String[] rueckgabe = new String[failObjects.length];
 
         for(int i = 0; i < rueckgabe.length; i++) {
-            rueckgabe[i] = fails[i].getMessage();
+            rueckgabe[i] = ((TestFailure) failObjects[i]).getMessage();
+            if(rueckgabe[i] == null) {
+                rueckgabe[i] = ((TestFailure)failObjects[i]).getMethodName();
+            }
         }
-
+        
         return rueckgabe;
     }
 
