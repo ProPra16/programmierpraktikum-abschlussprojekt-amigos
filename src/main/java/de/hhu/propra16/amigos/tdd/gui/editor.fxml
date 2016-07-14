@@ -118,7 +118,7 @@
             </Tab>
             <Tab text="Acceptance Tests" fx:id="atddTab">
                 <content>
-                    <FormattableTDDCodeArea styleClass="editor" fx:id="atddArea" text="import static org.junit.Assert.*;&#10;import org.junit.Test;&#10;&#10;class ATDD {&#10;//Write failing acceptance Test here&#10;&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                    <FormattableTDDCodeArea styleClass="editor" fx:id="atddArea" text="import static org.junit.Assert.*;&#10;import org.junit.Test;&#10;&#10;public class ATDD {&#10;    @Test&#10;    public void testSomething(){&#10;        //Implement acceptance test here&#10;&#10;    }&#10;&#10;}" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 </content>
             </Tab>
             <Tab text="Compile/Test Output" fx:id="outputTab" >

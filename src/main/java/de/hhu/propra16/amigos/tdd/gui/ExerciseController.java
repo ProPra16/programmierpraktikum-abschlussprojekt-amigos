@@ -209,7 +209,7 @@ public class ExerciseController {
             this.compileStatusLabel.getStyleClass().remove("red");
         }else{
             this.compileStatusLabel.setText("Code doesn't compile");
-            this.compileStatusLabel.getStyleClass().add("red");
+            if(!this.compileStatusLabel.getStyleClass().contains("red")) this.compileStatusLabel.getStyleClass().add("red");
             output.append("Code compile error(s):\n");
             for(String e : compileResult){
                 output.append(e);
