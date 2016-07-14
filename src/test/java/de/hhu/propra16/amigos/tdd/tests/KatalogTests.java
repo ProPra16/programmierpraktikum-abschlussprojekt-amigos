@@ -56,4 +56,16 @@ public class KatalogTests {
     public void getClasses() {
         assertEquals("empty1",testKatalog.getClasses(0).keySet().toArray()[0]);
     }
+    @Test
+    public void getTests() {
+        assertEquals("empty2",testKatalog.getTests(0).keySet().toArray()[0]);
+    }
+    @Test
+    public void getOptionsATDD() {
+        assertEquals("ATDD",testKatalog.getOptions(0).keySet().toArray()[1]);
+    }
+    @Test
+    public void getOptionsBabysteps() {
+        assertEquals("babysteps",testKatalog.getOptions(0).keySet().toArray()[0]);
+    }
 }
