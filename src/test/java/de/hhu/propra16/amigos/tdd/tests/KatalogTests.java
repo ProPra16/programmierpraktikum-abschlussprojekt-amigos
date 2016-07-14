@@ -44,4 +44,12 @@ public class KatalogTests {
             assertFalse(true);
         }
     }
+    @Test
+    public void getName() {
+        assertEquals("test1",testKatalog.getName(0));
+    }
+    @Test
+    public void getDescription() {
+        assertEquals("test description",testKatalog.getDescription(0));
+    }
 }
