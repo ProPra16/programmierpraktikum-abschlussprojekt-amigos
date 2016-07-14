@@ -31,6 +31,12 @@ public class LogikHandlerTests {
     private Exercise emptyExercise;
     private LogikHandler simpleHandler;
 
+    private void setupGoodBase() {
+        classes.put("Code","Code");
+        simpleHandler.setCode("public class Code { }");
+        tests.put("Good","passing");
+    }
+
     @Before
     public void initialise() {
         emptyExercise = new Exercise("name", "desc", classes, tests, options);
@@ -76,26 +82,20 @@ public class LogikHandlerTests {
     }
     @Test
     public void isOneTestFailing_false() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.isOneTestFailing());
     }
     @Test
     public void tryCompileTest_good_test_pass() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
 
         assertTrue(simpleHandler.tryCompileTest() == null);
     }
     @Test
     public void getFailingTests_get_none() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertEquals(simpleHandler.getFailingTests().length,0);
     }
@@ -127,10 +127,102 @@ public class LogikHandlerTests {
     }
     @Test
     public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_fails() {
-        classes.put("Code","Code");
-        simpleHandler.setCode("public class Code { }");
-        tests.put("Good","passing");
+        setupGoodBase();
         simpleHandler.setTest(onePassingTest);
         assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
+    @Test
+    public void switchState_WRITE_FAILING_TEST_to_MAKE_PASS_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        assertTrue(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
+    @Test
+    public void switchState_WRITE_FAILING_TEST_to_REFACTOR_fails() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        assertFalse(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void getNextState_from_WRITE_FAILING_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        assertTrue(simpleHandler.getNextState()==TDDState.MAKE_PASS_TEST);
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_fails() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertFalse(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_REFACTOR_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        assertTrue(simpleHandler.switchState(TDDState.REFACTOR));
+    }
+    @Test
+    public void switchState_MAKE_PASS_TEST_to_WRITE_FAILING_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void getNextState_from_MAKE_TEST_PASS_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        assertTrue(simpleHandler.getNextState()==TDDState.REFACTOR);
+    }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_fails_from_test() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        simpleHandler.setTest(oneFailingTest);
+        assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_fails_from_code() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        simpleHandler.setCode("public class Code {");
+        assertFalse(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_REFACTOR_to_WRITE_FAILING_TEST_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        assertTrue(simpleHandler.switchState(TDDState.WRITE_FAILING_TEST));
+    }
+    @Test
+    public void switchState_REFACTOR_to_MAKE_PASS_TEST_fails() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        assertFalse(simpleHandler.switchState(TDDState.MAKE_PASS_TEST));
+    }
+    @Test
+    public void getNextState_from_REFACTOR_pass() {
+        setupGoodBase();
+        simpleHandler.setTest(oneFailingTest);
+        simpleHandler.switchState(TDDState.MAKE_PASS_TEST);
+        simpleHandler.setTest(onePassingTest);
+        simpleHandler.switchState(TDDState.REFACTOR);
+        assertTrue(simpleHandler.getNextState()==TDDState.WRITE_FAILING_TEST);
     }
 }
