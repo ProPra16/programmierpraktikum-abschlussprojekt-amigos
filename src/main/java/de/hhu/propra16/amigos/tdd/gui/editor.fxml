@@ -61,11 +61,11 @@
             <CheckBox fx:id="displayCodeTestsBesideCheckbox" text="Code/Tests beside" selected="true" onAction="#checkBesideChanged" />
         </VBox>
 
-        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="6" GridPane.rowIndex="0" GridPane.halignment="RIGHT" minWidth="150">
+        <VBox fx:id="babyStepContainer" spacing="10" GridPane.columnIndex="6" GridPane.rowIndex="0" minWidth="150">
             <Label id="timerInfoLabel" text="${'Limit active:\n\nTime left\nfor this Phase\nbefore Reset:'}"/>
             <Label fx:id="timerLabel" id="timer" text="02:00" />
         </VBox>
-        <VBox fx:id="exerciseContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0" GridPane.halignment="RIGHT">
+        <VBox fx:id="exerciseContainer" spacing="10" GridPane.columnIndex="9" GridPane.rowIndex="0">
             <Label fx:id="exerciseLabel" id="exerciseLabel" text="AufgabeXY" wrapText="true" />
             <ScrollPane fitToWidth="true">
                 <content>
@@ -74,7 +74,7 @@
             </ScrollPane>
             <Label id="step" fx:id="nextStep" text="" />
         </VBox>
-	<VBox GridPane.columnIndex="10" spacing="15">
+	<VBox GridPane.columnIndex="10" spacing="15" GridPane.halignment="RIGHT">
             <Button id="socialMediaButton" fx:id="facebookButton" styleClass="socialMediaButton" text="" onAction="#facebook" >
                 <graphic>
                     <ImageView>

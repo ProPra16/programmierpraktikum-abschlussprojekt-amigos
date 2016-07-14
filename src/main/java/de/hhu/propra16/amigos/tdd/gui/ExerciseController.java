@@ -385,7 +385,7 @@ public class ExerciseController {
     }
     public void facebook() {
         if(Desktop.isDesktopSupported()){
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Attention", ButtonType.CLOSE);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Attention", ButtonType.CLOSE);
             alert.setContentText("Paste the copied text to your Facebook wall.");
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
