@@ -75,7 +75,7 @@ public class ExerciseController {
         this.logikHandler = new LogikHandler(exercise);
 
         if(this.logikHandler.isBabySteps()){
-            this.babyStepsTime = this.logikHandler.babyStepsTime() * 60;
+            this.babyStepsTime = this.logikHandler.babyStepsTime();
         }else{
             menuPane.getChildren().remove(this.babyStepContainer);
         }
