@@ -64,6 +64,14 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
+        boolean result = switchStateInternal(newState);
+        if(result && babySteps){
+            lastPassed.convertToValuesOf(aktuell);
+        }
+        return result;
+    }
+
+    private boolean switchStateInternal(TDDState newState) {
         if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) ) {
             return false;
         }
