@@ -64,17 +64,26 @@ public class LogikHandler {
     }
 
     public boolean switchState(TDDState newState){
-        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) || (aTDD && status == TDDState.REFACTOR && newState == TDDState.WRITE_FAILING_TEST)) {
+        boolean result = switchStateInternal(newState);
+        if(result && babySteps){
+            lastPassed.convertToValuesOf(aktuell);
+        }
+        return result;
+    }
+
+    private boolean switchStateInternal(TDDState newState) {
+        if((status == TDDState.REFACTOR && isOneTestFailing()) || (status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && isATDDpassing()) ) {
             return false;
         }
 
-        if(!aTDD && status == TDDState.REFACTOR && !isOneTestFailing() && newState == TDDState.WRITE_FAILING_TEST) {
-            status = TDDState.WRITE_FAILING_TEST;
-            return true;
+        if(status == TDDState.REFACTOR && !isOneTestFailing() && newState == TDDState.WRITE_FAILING_TEST) {
+            if(!aTDD || !isATDDpassing()){
+                status = TDDState.WRITE_FAILING_TEST;
+                return true;
+            }
         }
 
-        if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) {
-            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
+        if(aTDD && newState == TDDState.WRITE_FAILING_ACCEPTANCE_TEST && !isATDDpassing()) {
             status = TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
             return true;
         }
@@ -83,8 +92,6 @@ public class LogikHandler {
             return false;
 
         if(newState == TDDState.WRITE_FAILING_TEST) {
-
-            if(status == TDDState.REFACTOR) lastPassed.convertToValuesOf(aktuell);
             status = TDDState.WRITE_FAILING_TEST;
             return true;
         }
@@ -92,7 +99,7 @@ public class LogikHandler {
         // From now on, a state can only be a next state as given by getNextState()
 
         if(newState == TDDState.REFACTOR) {
-            if(tryCompileTest() == null && tryCompileCode() == null) {
+            if(tryCompileTest() == null && tryCompileCode() == null && !isOneTestFailing()) {
                 status = newState;
                 return true;
             }
@@ -269,8 +276,8 @@ public class LogikHandler {
     public TDDState getNextState() {
         if(status == TDDState.WRITE_FAILING_TEST) return TDDState.MAKE_PASS_TEST;
         if(status == TDDState.MAKE_PASS_TEST) return TDDState.REFACTOR;
-        if(status == TDDState.REFACTOR && aTDD) return TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
-        if(status == TDDState.REFACTOR && !aTDD) return TDDState.WRITE_FAILING_TEST;
+        if(status == TDDState.REFACTOR && aTDD && isATDDpassing()) return TDDState.WRITE_FAILING_ACCEPTANCE_TEST;
+        if(status == TDDState.REFACTOR) return TDDState.WRITE_FAILING_TEST;
         if(status == TDDState.WRITE_FAILING_ACCEPTANCE_TEST) return TDDState.WRITE_FAILING_TEST;
 
         return null;
