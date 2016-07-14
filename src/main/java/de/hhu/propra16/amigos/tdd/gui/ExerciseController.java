@@ -6,12 +6,18 @@ import de.hhu.propra16.amigos.tdd.logik.LogikHandler;
 import de.hhu.propra16.amigos.tdd.logik.TDDState;
 import de.hhu.propra16.amigos.tdd.xml.Exercise;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
-import javafx.animation.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,7 +27,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,7 +61,7 @@ public class ExerciseController {
     @FXML
     private GridPane menuPane, codeTestGridPane;
     @FXML
-    private Button prevPhaseButton;
+    private Button prevPhaseButton, facebookButton, twitterButton;
     @FXML
     private VBox babyStepContainer, exerciseContainer, outputTabContainer;
 
@@ -64,7 +75,7 @@ public class ExerciseController {
         this.logikHandler = new LogikHandler(exercise);
 
         if(this.logikHandler.isBabySteps()){
-            this.babyStepsTime = this.logikHandler.babyStepsTime() * 60;
+            this.babyStepsTime = this.logikHandler.babyStepsTime();
         }else{
             menuPane.getChildren().remove(this.babyStepContainer);
         }
@@ -198,7 +209,7 @@ public class ExerciseController {
             this.compileStatusLabel.getStyleClass().remove("red");
         }else{
             this.compileStatusLabel.setText("Code doesn't compile");
-            this.compileStatusLabel.getStyleClass().add("red");
+            if(!this.compileStatusLabel.getStyleClass().contains("red")) this.compileStatusLabel.getStyleClass().add("red");
             output.append("Code compile error(s):\n");
             for(String e : compileResult){
                 output.append(e);
@@ -388,6 +399,34 @@ public class ExerciseController {
         this.switchStateAnimation(this.logikHandler.getState());
         this.applyStateToGUI();
     }
+    public void facebook() {
+        if(Desktop.isDesktopSupported()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Attention", ButtonType.CLOSE);
+            alert.setContentText("Paste the copied text to your Facebook wall.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+            new Thread(() -> {
+                try {
+                    Desktop.getDesktop().browse( new URI( "http://facebook.com" ) );
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection("I'm just solving the exercise " + this.exercise.getName() + " using #TDD"), null);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
 
+}
+
+    public void twitter() {
+        if (Desktop.isDesktopSupported()) {
+            new Thread(() -> {
+                try {
+                    Desktop.getDesktop().browse(new URI("http://twitter.com/share?text="+ URLEncoder.encode("I'm just solving the exercise " + this.exercise.getName() + " using #TDD")));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }).start();
+        }
+    }
 
 }
