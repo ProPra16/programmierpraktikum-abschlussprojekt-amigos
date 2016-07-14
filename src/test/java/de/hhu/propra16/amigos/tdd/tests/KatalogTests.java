@@ -3,11 +3,13 @@ package de.hhu.propra16.amigos.tdd.tests;
 import static org.junit.Assert.*;
 import de.hhu.propra16.amigos.tdd.xml.Katalog;
 import de.hhu.propra16.amigos.tdd.xml.KatalogStore;
-import org.junit.Before;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class KatalogTests {
@@ -75,5 +77,15 @@ public class KatalogTests {
     @Test
     public void getExercise_null() {
         assertTrue(testKatalog.getExercise(1)==null);
+    }
+    @Test
+    public void KatalogStoreSave() {
+        final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" " +
+                "standalone=\"no\"?><exercises><exercise><name>test1</name><description>test description</description>" +
+                "<classes><class name=\"empty1\">public class empty1 {}</class></classes><tests><test name=\"empty2\">public class empty2 {}</test></tests>" +
+                "<options><option name=\"babysteps\" value=\"60\"/><option name=\"ATDD\" value=\"true\"/></options></exercise></exercises>";
+        OutputStream stream = new ByteArrayOutputStream();
+        KatalogStore.save(testKatalog, stream);
+        assertEquals(expected,stream.toString());
     }
 }
