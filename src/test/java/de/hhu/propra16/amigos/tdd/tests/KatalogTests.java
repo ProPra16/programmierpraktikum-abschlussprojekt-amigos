@@ -52,4 +52,8 @@ public class KatalogTests {
     public void getDescription() {
         assertEquals("test description",testKatalog.getDescription(0));
     }
+    @Test
+    public void getClasses() {
+        assertEquals("empty1",testKatalog.getClasses(0).keySet().toArray()[0]);
+    }
 }
