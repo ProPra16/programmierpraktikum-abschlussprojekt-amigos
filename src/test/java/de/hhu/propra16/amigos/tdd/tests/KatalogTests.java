@@ -68,4 +68,12 @@ public class KatalogTests {
     public void getOptionsBabysteps() {
         assertEquals("babysteps",testKatalog.getOptions(0).keySet().toArray()[0]);
     }
+    @Test
+    public void getExercise_notnull() {
+        assertFalse(testKatalog.getExercise(0)==null);
+    }
+    @Test
+    public void getExercise_null() {
+        assertTrue(testKatalog.getExercise(1)==null);
+    }
 }
