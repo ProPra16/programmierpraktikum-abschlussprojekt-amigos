@@ -101,6 +101,7 @@ public class ChooseExerciseController implements Initializable{
             stage.setOnCloseRequest(event -> {
                 currentStage.show();
                 currentStage.requestFocus();
+                exContr.onClose();
             });
 
             stage.setTitle(selectedExercise.getName() + " | TDD Trainer");

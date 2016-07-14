@@ -100,6 +100,10 @@ public class ExerciseController {
         scene.getAccelerators().put(ctrlSpace, this::formatCode);
     }
 
+    public void onClose(){
+        if(babyStepsTimer != null) babyStepsTimer.cancel();
+    }
+
     private void applyStateToGUI(){
         switch(this.logikHandler.getState()){
             case MAKE_PASS_TEST:
