@@ -6,6 +6,9 @@
 
 Eduard, Oliver, Lucas, Niklas und Josias
 
+##Hinweise##
+Handbuch.pdf und Systembeschreibung.pdf sind jeweils im Ordner berichte/ zu finden.
+
 ###Build###
 ```gradle build```
 
