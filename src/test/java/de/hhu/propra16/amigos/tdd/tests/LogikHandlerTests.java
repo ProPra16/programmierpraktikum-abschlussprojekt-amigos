@@ -46,13 +46,13 @@ public class LogikHandlerTests {
     public void tryCompileCode_no_code() {
         classes.put("test","test");
         simpleHandler.setCode("");
-        assertFalse(simpleHandler.tryCompileCode().toString().isEmpty());
+        assertTrue(simpleHandler.tryCompileCode()[0].contentEquals("nothing to compile"));
     }
     @Test
     public void tryCompileCode_bad_code() {
         classes.put("test","fail");
         simpleHandler.setCode("fail");
-        assertFalse(simpleHandler.tryCompileCode().toString().isEmpty());
+        assertFalse(simpleHandler.tryCompileCode() == null);
      }
     @Test
     public void tryCompileCode_good_code() {
@@ -64,13 +64,13 @@ public class LogikHandlerTests {
     public void tryCompileTest_no_code() {
         tests.put("test","fail");
         simpleHandler.setTest("");
-        assertFalse(simpleHandler.tryCompileTest().toString().isEmpty());
+        assertFalse(simpleHandler.tryCompileTest() == null);
     }
     @Test
     public void tryCompileTest_bad_test() {
         tests.put("test","fail");
         simpleHandler.setTest("fail");
-        assertFalse(simpleHandler.tryCompileTest().toString().isEmpty());
+        assertFalse(simpleHandler.tryCompileTest() == null);
     }
     @Test
     public void isOneTestFailing_true() {
