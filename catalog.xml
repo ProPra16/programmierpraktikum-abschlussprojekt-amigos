@@ -15,7 +15,7 @@ Gehen Sie davon aus, dass es hoechstens ein laengstes Plateau gibt.
         <classes>
 
             <class name="Plateau">
-class Plateau {
+public class Plateau {
     public static int[] laengstesPlateu(int[] Eingabe){
         //ToDo: implementieren sie den Code hier
     }
@@ -28,7 +28,7 @@ class Plateau {
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-class PlateauTest {
+public class PlateauTest {
     @Test
     public void testSomething() {
         //ToDo: Schreiben sie selbstständig Tests für die Aufgabe.
@@ -57,7 +57,7 @@ In dieser Aufgabe werden Sie eine Methode und die dazugehoerigen Tests mit Hilfe
         <classes>
 
             <class name="Pruefziffern">
-class Pruefziffern {
+public class Pruefziffern {
 
     public static boolean pruefe17(int[] ziffern) {
         // Implementieren Sie Ihre Loesung hier 
@@ -71,10 +71,10 @@ class Pruefziffern {
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-class PruefziffernTest {
+public class PruefziffernTest {
 
     @Test
-    public void testSomething {
+    public void testSomething() {
         //implementieren Sie Tests für kleinere Zwischenschritte hier
     }
 }
@@ -103,7 +103,7 @@ Be careful: you only have 3 minutes for each phase except refactoring, so try to
         <classes>
 
             <class name="RomanNumberConverter">
-class RomanNumberConverter {
+public class RomanNumberConverter {
     public static String convertToRoman(int input){
         //Implement your solution here
     }
@@ -112,11 +112,11 @@ class RomanNumberConverter {
 
             <tests>
 
-                <test name="RomanNumberConverterTest">
+                <test name="RomanNumbersTest">
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-class RomanNumbersTest {
+public class RomanNumbersTest {
 
     @Test
     public void testSomething() {
@@ -131,7 +131,7 @@ class RomanNumbersTest {
 
         <options>
 
-            <option name="babysteps" value="1" />
+            <option name="babysteps" value="60" />
 
         </options>
 
