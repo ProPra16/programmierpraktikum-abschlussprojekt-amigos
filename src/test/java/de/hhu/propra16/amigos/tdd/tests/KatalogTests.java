@@ -76,4 +76,17 @@ public class KatalogTests {
     public void sizeIsOne() {
         assertEquals(1,testKatalog.size());
     }
+    @Test
+    public void sizeIsTwo() {
+        final String twoExercises = "<exercises><exercise><name>test1</name><description>test</description><classes><class name=\"empty\">public class empty {}</class><tests><test name=\"empty\">public class empty {}</test></tests></classes><options></options></exercise>" +
+                "<exercise><name>test2</name><description>test</description><classes><class name=\"empty\">public class empty {}</class><tests><test name=\"empty\">public class empty {}</test></tests></classes><options></options></exercise></exercises>";
+        try {
+            Katalog sizeTwoKatalog = KatalogStore.lese(new ByteArrayInputStream(twoExercises.getBytes(StandardCharsets.UTF_8)));
+            assertEquals(2,sizeTwoKatalog.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assertFalse(true);
+        }
+
+    }
 }
